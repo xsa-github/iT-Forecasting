@@ -1,0 +1,63 @@
+{
+	"format_version": 1,
+	"imports": [{
+		"target_table": "EMPLOYEE",
+		"source_data": {
+			"data_type": "CSV",
+			"file_name": "Employee.csv",
+			"has_header": false,
+			"dialect": "HANA",
+			"type_config": {
+				"delimiter": ","
+			}
+		},
+		"import_settings": {
+			"include_filter" : [ ],
+			"import_columns": [	"EMPID",
+			"EMPNAME",
+			"EMPJOBDESC",
+			"EMPRESOURCEGRP",
+			"EMPMANAGER"]
+		},
+		"column_mappings": {
+			"EMPID": 1,
+			"EMPNAME": 2,
+			"EMPJOBDESC": 3,
+			"EMPRESOURCEGRP": 4,
+			"EMPMANAGER": 5
+		}
+	},
+	{
+		"target_table": "BOOKING",
+		"source_data": {
+			"data_type": "CSV",
+			"file_name": "Booking.csv",
+			"has_header": false,
+			"dialect": "HANA",
+			"type_config": {
+				"delimiter": ","
+			}
+		},
+		"import_settings": {
+			"include_filter" : [ ],
+			"import_columns": [ "EMPID",
+			"BKSTARTDATETIME",
+			"BKENDDATETIME",
+			"BKTYPE",
+			"BKCUSTOMER",
+			"BKWBS",
+			"BKWBSDESC",
+			"BKCUSTOMERLOCATION"]
+		},
+		"column_mappings": {
+			"EMPID": 1,
+			"BKSTARTDATETIME": 2,
+			"BKENDDATETIME": 3,
+			"BKTYPE": 4,
+			"BKCUSTOMER": 5,
+			"BKWBS": 6,
+			"BKWBSDESC": 7,
+			"BKCUSTOMERLOCATION": 8
+		}
+	}]
+}

@@ -1,0 +1,10 @@
+column table Employee (
+	"EMPID" NVARCHAR(10) not null comment 'Employee ID',
+	"EMPNAME" NVARCHAR(40) comment 'Employee Name',
+	"EMPJOBDESC" NVARCHAR(100) comment 'Job Description',
+	"EMPRESOURCEGRP" NVARCHAR(10) comment 'Resource Group',
+	"EMPMANAGER" NVARCHAR(40) comment 'Manager Name',
+	primary key ("EMPID"))
+	comment 'Calendar Employee'
+	with associations( join "BOOKING" on "EMPID" = "EMPID" )
+	unload priority 2 auto merge

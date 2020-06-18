@@ -1,0 +1,13 @@
+column table Booking (
+	"EMPID" NVARCHAR(10) not null comment 'Employee ID',
+	"BKSTARTDATETIME" SECONDDATE not null comment 'Start Date',
+	"BKENDDATETIME" SECONDDATE not null comment 'Start Date',
+	"BKTYPE" NVARCHAR(1) comment 'Booking Type',
+	"BKCUSTOMER" NVARCHAR(40) comment 'Customer',
+	"BKWBS" NVARCHAR(20) comment 'WBS Code',
+	"BKWBSDESC" NVARCHAR(40) comment 'WBS Desc.',
+	"BKCUSTOMERLOCATION" NVARCHAR(40) comment 'Customer Location',
+	primary key ("EMPID","BKSTARTDATETIME","BKENDDATETIME"))
+	comment 'Calendar Employee Booking'
+	with associations( join "EMPLOYEE" on "EMPLOYEE"."EMPID" = "EMPID" )
+	unload priority 2 auto merge
