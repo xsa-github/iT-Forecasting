@@ -1,0 +1,9 @@
+{
+	"welcomeFile": "index.html",
+	"authenticationMethod": "none",
+	"routes": [{
+		"source": "(.*)(.xsodata)",
+		"destination": "core-xsjs-backend",
+		"authenticationType": "none"
+	}]
+}

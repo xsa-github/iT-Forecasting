@@ -1,0 +1,7 @@
+service {
+    "EMPLOYEE" as "Employee" navigates ("Bookings" as "Booking");
+	"BOOKING" as "Booking";
+
+	association "Bookings" principal  "Employee"("EMPID")
+	multiplicity "1" dependent "Booking"("EMPID") multiplicity "*";
+}

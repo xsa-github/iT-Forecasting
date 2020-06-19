@@ -1,19 +1,36 @@
 ID: iT-Staffing
 _schema-version: '2.1'
 version: 0.0.1
-
 modules:
- - name: db
-   type: hdb
-   path: db
-   requires:
-    - name: hdi_db
-
+  - name: db
+    type: hdb
+    path: db
+    requires:
+      - name: hdi_db
+  - name: web
+    type: html5
+    path: web
+    requires:
+      - name: core_xsjs_api
+        group: destinations
+        properties:
+          name: core-xsjs-backend
+          url: '~{url}'
+  - name: core_xsjs
+    type: nodejs
+    path: core_xsjs
+    provides:
+      - name: core_xsjs_api
+        properties:
+          url: '${default-url}'
+    requires:
+      - name: hdi_db
+      - name: db
 resources:
- - name: hdi_db
-   parameters:
+  - name: hdi_db
+    parameters:
       config:
-         schema: it_staffing
-   properties:
-      hdi-container-name: ${service-name}
-   type: com.sap.xs.hdi-container
+        schema: it_staffing
+    properties:
+      hdi-container-name: '${service-name}'
+    type: com.sap.xs.hdi-container
