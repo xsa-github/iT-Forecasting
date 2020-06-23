@@ -1,0 +1,13 @@
+<mvc:View xmlns:smartTable="sap.ui.comp.smarttable" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
+	xmlns:html="http://www.w3.org/1999/xhtml" controllerName="calendar-app.webui5.controller.Calendar" displayBlock="true">
+	<App id="idAppControl">
+		<pages>
+			<Page title="{i18n>title}">
+				<content>
+					<smartTable:SmartTable id="tblPOHeader" tableType="Table" header="{i18n>POHeader}" showRowCount="true" enableAutoBinding="true"
+						showFullScreenButton="true"></smartTable:SmartTable>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

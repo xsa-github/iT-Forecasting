@@ -5,24 +5,49 @@
 <meta http-equiv='Content-Type' content='text/html;charset=UTF-8' />
 <title>web</title>
 <!-- 1.) Load SAPUI5 (from a remote server), select theme and control library -->
-<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
-	id="sap-ui-bootstrap" data-sap-ui-libs="sap.m"
+<script src="{{{sapui5_sb.url}}}/resources/sap-ui-core.js"
+	id="sap-ui-bootstrap" data-sap-ui-libs="sap.m, sap.ui.unified"
 	data-sap-ui-theme="sap_bluecrystal">
-		</script>
-<!-- 2.) Create a UI5 button and place it onto the page -->
+</script>
+<!-- 2.) Create a UI5 table and place it onto the page -->
 <script>
-	// create the button instance
-	var myButton = new sap.m.Button("btn");
+	
+	var oModel = new sap.ui.model.odata.v2.ODataModel("/xsodata/Calendar.xsodata", true);
+	
+	var pcAppointment = new sap.ui.unified.CalendarAppointment( {
+		startDate: "{BKSTARTDATETIME}",
+		endDate: "{BKENDDATETIME}",
+		title: "{BKCUSTOMER}",
+		tooltip: "{BKWBSDESC}",
+		text: "{BKWBS}"
+	});
+	
+	var pcRow = new sap.m.PlanningCalendarRow( {
+		title: "{EMPNAME}",
+		text: "{EMPJOBDESC}",
+		tooltip: "{EMPMANAGER}"
+	});
+	
+	pcRow.bindAggregation("appointments", {
+		path: "Booking",
+		template: pcAppointment
+	});
+	
+	var planCal = new sap.m.PlanningCalendar("PC1", {
+		stickyHeader: true,
+		//startDate: new Date("2020", "5", "22", "08", "00"),
+		showWeekNumbers: true
+	});
+	
+	planCal.bindAggregation("rows", {
+		path: "/Employee",
+		template: pcRow
+	});
+	
+	planCal.setModel(oModel);
+	planCal.placeAt("uiArea");
 
-	// set properties, e.g. the text (there is also a shorter way of setting several properties)
-	myButton.setText("Hello World!");
-
-	// attach an action to the button's "press" event (use jQuery to fade out the button)
-	myButton.attachPress(function(){$("#btn").fadeOut()});
-
-	// place the button into the HTML element defined below
-	myButton.placeAt("uiArea");
-	</script>
+</script>
 </head>
 <body class="sapUiBody">
 	<!-- This is where you place the UI5 button -->

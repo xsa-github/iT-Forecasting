@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta charset="UTF-8">
+		<title>My Calendar</title>
+		<script id="sap-ui-bootstrap"
+			src="{{{sapui5_sb.url}}}/resources/sap-ui-core.js"
+			data-sap-ui-libs="sap.m, sap.ui.unified"
+			data-sap-ui-theme="sap_bluecrystal"
+			data-sap-ui-compatVersion="edge"
+			data-sap-ui-preload="async"
+			data-sap-ui-language="en"
+			data-sap-ui-resourceroots='{
+				"common": "../common",
+				"root": "./",
+				"calendar-app.webui5": "./"}'
+			data-sap-ui-frameOptions="trusted">
+		</script>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<script>
+			sap.ui.getCore().attachInit(function() {
+				new sap.m.Shell({
+					app: new sap.ui.core.ComponentContainer({
+						height : "100%",
+						name : "calendar-app.webui5"
+					})
+				}).placeAt("content");
+			});
+		</script>
+		<script type="text/javascript" src="/common/error.js" ></script>
+	</head>
+
+	<body class="sapUiBody" id="content">
+	</body>
+</html>

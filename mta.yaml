@@ -16,6 +16,7 @@ modules:
         properties:
           name: core-xsjs-backend
           url: '~{url}'
+      - name: ui5
   - name: core_xsjs
     type: nodejs
     path: core_xsjs
@@ -26,6 +27,16 @@ modules:
     requires:
       - name: hdi_db
       - name: db
+  - name: webui5
+    type: html5
+    path: webui5
+    requires:
+      - name: core_xsjs_api
+        group: destinations
+        properties:
+          name: core-xsjs-backend
+          url: '~{url}'
+      - name: ui5
 resources:
   - name: hdi_db
     parameters:
@@ -34,3 +45,8 @@ resources:
     properties:
       hdi-container-name: '${service-name}'
     type: com.sap.xs.hdi-container
+  - name: ui5
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: sapui5_sb
+      service-plan: sapui5-1.60
