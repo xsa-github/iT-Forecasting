@@ -1,11 +1,22 @@
-<mvc:View xmlns:smartTable="sap.ui.comp.smarttable" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
-	xmlns:html="http://www.w3.org/1999/xhtml" controllerName="calendar-app.webui5.controller.Calendar" displayBlock="true">
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:unified="sap.ui.unified" xmlns:html="http://www.w3.org/1999/xhtml"
+	controllerName="calendar-app.webui5.controller.Calendar" displayBlock="true">
 	<App id="idAppControl">
 		<pages>
 			<Page title="{i18n>title}">
 				<content>
-					<smartTable:SmartTable id="tblPOHeader" tableType="Table" header="{i18n>POHeader}" showRowCount="true" enableAutoBinding="true"
-						showFullScreenButton="true"></smartTable:SmartTable>
+					<PlanningCalendar id="myCal" rows="{path: '/Employee'}"	stickyHeader="true" showWeekNumbers="true">
+						<toolbarContent>
+							<Title text="{i18n>calTitle}" titleStyle="H4"/>
+						</toolbarContent>
+						<rows>
+							<PlanningCalendarRow title="{EMPNAME}" text="{EMPJOBDESC}" appointments="{path: 'Booking', templateShareable: 'true'}" tooltip="{EMPMANAGER}">
+								<appointments>
+									<unified:CalendarAppointment startDate="{BKSTARTDATETIME}" endDate="{BKENDDATETIME}" title="{BKCUSTOMER}" text="{BKWBS}" tooltip="{BKWBSDESC}">
+									</unified:CalendarAppointment>
+								</appointments>
+							</PlanningCalendarRow>
+						</rows>
+					</PlanningCalendar>
 				</content>
 			</Page>
 		</pages>
