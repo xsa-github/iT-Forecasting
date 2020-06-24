@@ -4,7 +4,8 @@
 		<pages>
 			<Page title="{i18n>title}">
 				<content>
-					<PlanningCalendar id="myCal" rows="{path: '/Employee'}"	stickyHeader="true" showWeekNumbers="true">
+					<PlanningCalendar id="myCal" rows="{path: '/Employee'}"	stickyHeader="true" showWeekNumbers="true"
+						appointmentSelect="handleAppointmentSelect">
 						<toolbarContent>
 							<Title text="{i18n>calTitle}" titleStyle="H4"/>
 						</toolbarContent>
