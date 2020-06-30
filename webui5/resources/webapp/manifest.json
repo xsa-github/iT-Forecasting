@@ -20,6 +20,10 @@
 				"settings": {
 					"odataVersion": "2.0"
 				}
+			},
+			"filterService": {
+				"uri": "/webapp/model/filterData.json",
+				"type": "JSON"
 			}
 		}
 	},
@@ -78,9 +82,21 @@
 					"defaultUpdateMethod": "PUT"
 				}
 			},
+			
+			"filterData": {
+				"dataSource": "filterService",
+				"type": "sap.ui.model.json.JSONModel",
+				"preload": true,
+				"settings": {
+					"useBatch": false,
+					"json": true
+				}
+			},
+			
 			"config": {
 				"type": "sap.ui.model.json.JSONModel"
 			},
+			
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {

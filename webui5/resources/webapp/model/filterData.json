@@ -1,0 +1,35 @@
+{
+	"ResourceGroup": [{
+		"key": "0000000001",
+		"text": "Dave Pollock"
+	}, 
+	{
+		"key": "0000000002",
+		"text": "Tanya Fernandes"
+	}, 
+	{
+		"key": "0000000003",
+		"text": "Simon Rotherham"
+	}],
+	
+	"BookingType": [{
+		"key": "1",
+		"text": "Confirmed",
+		"apptype" : "sap.ui.unified.CalendarDayType.Type01"
+	},
+	{
+		"key": "2",
+		"text": "Tentative",
+		"apptype" : "sap.ui.unified.CalendarDayType.Type02"
+	},
+	{
+		"key": "3",
+		"text": "Free Day",
+		"apptype" : "sap.ui.unified.CalendarDayType.Type03"
+	},
+	{
+		"key": "4",
+		"text": "Internal",
+		"apptype" : "sap.ui.unified.CalendarDayType.Type04"
+	}]
+}

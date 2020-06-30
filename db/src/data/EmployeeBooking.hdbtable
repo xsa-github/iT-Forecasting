@@ -1,7 +1,7 @@
 column table Booking (
 	"EMPID" NVARCHAR(10) not null comment 'Employee ID',
 	"BKSTARTDATETIME" SECONDDATE not null comment 'Start Date',
-	"BKENDDATETIME" SECONDDATE not null comment 'Start Date',
+	"BKENDDATETIME" SECONDDATE not null comment 'End Date',
 	"BKTYPE" NVARCHAR(1) comment 'Booking Type',
 	"BKCUSTOMER" NVARCHAR(40) comment 'Customer',
 	"BKWBS" NVARCHAR(20) comment 'WBS Code',

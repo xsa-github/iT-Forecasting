@@ -7,16 +7,7 @@ modules:
     path: db
     requires:
       - name: hdi_db
-  - name: web
-    type: html5
-    path: web
-    requires:
-      - name: core_xsjs_api
-        group: destinations
-        properties:
-          name: core-xsjs-backend
-          url: '~{url}'
-      - name: ui5
+  
   - name: core_xsjs
     type: nodejs
     path: core_xsjs

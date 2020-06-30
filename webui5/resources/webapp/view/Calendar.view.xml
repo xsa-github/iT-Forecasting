@@ -1,19 +1,38 @@
-<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:unified="sap.ui.unified" xmlns:html="http://www.w3.org/1999/xhtml"
-	controllerName="calendar-app.webui5.controller.Calendar" displayBlock="true">
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:unified="sap.ui.unified" xmlns:fb="sap.ui.comp.filterbar" xmlns:core="sap.ui.core"
+	xmlns:html="http://www.w3.org/1999/xhtml" controllerName="calendar-app.webui5.controller.Calendar" displayBlock="true">
 	<App id="idAppControl">
 		<pages>
 			<Page title="{i18n>title}">
+				<headerContent>
+					<Image src="/webapp/img/itelligence.gif" width="200px" />
+				</headerContent>
 				<content>
-					<PlanningCalendar id="myCal" rows="{path: '/Employee'}"	stickyHeader="true" showWeekNumbers="true"
-						appointmentSelect="handleAppointmentSelect">
-						<toolbarContent>
-							<Title text="{i18n>calTitle}" titleStyle="H4"/>
-						</toolbarContent>
+					<fb:FilterBar search="onSearch" showFilterConfiguration="false">
+						<fb:filterItems>
+							<fb:FilterItem name="ResGroup" label="Resource Group" labelTooltip="Resource Group" mandatory="true">
+								<fb:control>
+									<ComboBox id="cb1" items="{path: '/ResourceGroup'}">
+										<core:Item key="{key}" text="{text}"/>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="BkType" label="Booking Type" labelTooltip="Booking Type" mandatory="false">
+								<fb:control>
+									<ComboBox id="cb2" items="{path: '/BookingType'}">
+										<core:Item key="{key}" text="{text}"/>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterItem>
+						</fb:filterItems>
+					</fb:FilterBar>
+					<PlanningCalendar id="myCal" rows="{path: '/Employee'}" stickyHeader="true" showWeekNumbers="true"
+						appointmentSelect="handleAppointmentSelect" viewKey="Day">
 						<rows>
-							<PlanningCalendarRow title="{EMPNAME}" text="{EMPJOBDESC}" appointments="{path: 'Booking', templateShareable: 'true'}" tooltip="{EMPMANAGER}">
+							<PlanningCalendarRow title="{EMPNAME}" text="{EMPJOBDESC}" appointments="{path: 'Booking', templateShareable: 'true'}"
+								tooltip="{EMPMANAGER}">
 								<appointments>
-									<unified:CalendarAppointment startDate="{BKSTARTDATETIME}" endDate="{BKENDDATETIME}" title="{BKCUSTOMER}" text="{BKWBS}" tooltip="{BKWBSDESC}">
-									</unified:CalendarAppointment>
+									<unified:CalendarAppointment startDate="{BKSTARTDATETIME}" endDate="{BKENDDATETIME}" title="{BKCUSTOMER}" text="{BKWBS}"
+										tooltip="{BKWBSDESC}"></unified:CalendarAppointment>
 								</appointments>
 							</PlanningCalendarRow>
 						</rows>
