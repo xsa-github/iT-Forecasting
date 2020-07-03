@@ -4,8 +4,8 @@
 		"target_table": "EMPLOYEE",
 		"source_data": {
 			"data_type": "CSV",
-			"file_name": "Employee.csv",
-			"has_header": false,
+			"file_name": "Employees.csv",
+			"has_header": true,
 			"dialect": "HANA",
 			"type_config": {
 				"delimiter": ","
@@ -15,24 +15,22 @@
 			"include_filter" : [ ],
 			"import_columns": [	"EMPID",
 			"EMPNAME",
-			"EMPJOBDESC",
 			"EMPRESOURCEGRP",
-			"EMPMANAGER"]
+			"EMPRESOURCEPARENT"]
 		},
 		"column_mappings": {
 			"EMPID": 1,
 			"EMPNAME": 2,
-			"EMPJOBDESC": 3,
-			"EMPRESOURCEGRP": 4,
-			"EMPMANAGER": 5
+			"EMPRESOURCEGRP": 3,
+			"EMPRESOURCEPARENT": 4
 		}
 	},
 	{
 		"target_table": "BOOKING",
 		"source_data": {
 			"data_type": "CSV",
-			"file_name": "Booking.csv",
-			"has_header": false,
+			"file_name": "Bookings.csv",
+			"has_header": true,
 			"dialect": "HANA",
 			"type_config": {
 				"delimiter": ","
@@ -44,20 +42,22 @@
 			"BKSTARTDATETIME",
 			"BKENDDATETIME",
 			"BKTYPE",
+			"BKSTATUS",
 			"BKCUSTOMER",
+			"BKCUSTOMERNAME",
 			"BKWBS",
-			"BKWBSDESC",
-			"BKCUSTOMERLOCATION"]
+			"BKWBSDESC"]
 		},
 		"column_mappings": {
 			"EMPID": 1,
 			"BKSTARTDATETIME": 2,
 			"BKENDDATETIME": 3,
 			"BKTYPE": 4,
-			"BKCUSTOMER": 5,
-			"BKWBS": 6,
-			"BKWBSDESC": 7,
-			"BKCUSTOMERLOCATION": 8
+			"BKSTATUS": 5,
+			"BKCUSTOMER": 6,
+			"BKCUSTOMERNAME": 7,
+			"BKWBS": 8,
+			"BKWBSDESC": 9
 		}
 	}]
 }

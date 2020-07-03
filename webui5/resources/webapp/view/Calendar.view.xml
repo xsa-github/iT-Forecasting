@@ -9,11 +9,23 @@
 				<content>
 					<fb:FilterBar search="onSearch" showFilterConfiguration="false">
 						<fb:filterItems>
+							<fb:FilterItem name="ResParent" label="Resource Parent" labelTooltip="Resource Parent" mandatory="false">
+								<fb:control>
+									<ComboBox id="cb3" items="{path: '/ResourceParent'}">
+										<core:Item key="{key}" text="{text}"/>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterItem>
 							<fb:FilterItem name="ResGroup" label="Resource Group" labelTooltip="Resource Group" mandatory="true">
 								<fb:control>
 									<ComboBox id="cb1" items="{path: '/ResourceGroup'}">
 										<core:Item key="{key}" text="{text}"/>
 									</ComboBox>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="EmpID" label="Employee ID" labelTooltip="Employee ID" mandatory="false">
+								<fb:control>
+									<Input type="Text"/>
 								</fb:control>
 							</fb:FilterItem>
 							<fb:FilterItem name="BkType" label="Booking Type" labelTooltip="Booking Type" mandatory="false">
@@ -28,11 +40,11 @@
 					<PlanningCalendar id="myCal" rows="{path: '/Employee'}" stickyHeader="true" showWeekNumbers="true"
 						appointmentSelect="handleAppointmentSelect" viewKey="Day">
 						<rows>
-							<PlanningCalendarRow title="{EMPNAME}" text="{EMPJOBDESC}" appointments="{path: 'Booking', templateShareable: 'true'}"
-								tooltip="{EMPMANAGER}">
+							<PlanningCalendarRow title="{EMPNAME}" appointments="{path: 'Booking', templateShareable: 'true'}"
+								tooltip="{EMPRESOURCEGROUP}">
 								<appointments>
-									<unified:CalendarAppointment startDate="{BKSTARTDATETIME}" endDate="{BKENDDATETIME}" title="{BKCUSTOMER}" text="{BKWBS}"
-										tooltip="{BKWBSDESC}"></unified:CalendarAppointment>
+									<unified:CalendarAppointment startDate="{BKSTARTDATETIME}" endDate="{BKENDDATETIME}" title="{BKCUSTOMERNAME}"
+										tooltip="{BKWBS} {BKWBSDESC}"></unified:CalendarAppointment>
 								</appointments>
 							</PlanningCalendarRow>
 						</rows>

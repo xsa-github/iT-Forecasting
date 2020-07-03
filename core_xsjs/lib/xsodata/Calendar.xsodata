@@ -1,5 +1,5 @@
 service {
-    "EMPLOYEE" as "Employee" navigates ("Bookings" as "Booking");
+	"EMPLOYEE" as "Employee" navigates ("Bookings" as "Booking");
 	"BOOKING" as "Booking";
 
 	association "Bookings" principal  "Employee"("EMPID")

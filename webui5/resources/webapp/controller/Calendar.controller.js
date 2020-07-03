@@ -16,7 +16,7 @@ sap.ui.define([
 				// Get query Parameter and set as property of the JSON model
 				var resGroup = jQuery.sap.getUriParameters().get("rg");
 				if (!resGroup) {
-					resGroup = "0000000001";
+					resGroup = "AMS ABAP";
 				}
 				
 				// Bind the Filters
@@ -26,6 +26,9 @@ sap.ui.define([
 				
 				var oCombo2 = this.getView().byId("cb2");
 				oCombo2.setModel(fModel);
+				
+				var oCombo3 = this.getView().byId("cb3");
+				oCombo3.setModel(fModel);
 
 				// Load the Calendar
 				var oCalendar = this.getView().byId("myCal");
@@ -44,7 +47,7 @@ sap.ui.define([
 						var oContext = oAppointment.getBindingContext();
 						if (oContext) {
 							MessageBox.information("WBS Code: " + oContext.getProperty("BKWBS") + "\n" + "WBS Desc: " + oContext.getProperty("BKWBSDESC") +
-								"\n" + "Customer: " + oContext.getProperty("BKCUSTOMER") + "\n" + "Location: " + oContext.getProperty("BKCUSTOMERLOCATION"));
+								"\n" + "Customer: " + oContext.getProperty("BKCUSTOMERNAME") + "\n" + "Status: " + oContext.getProperty("BKSTATUS"));
 						}
 					}
 				}
@@ -68,14 +71,14 @@ sap.ui.define([
 					oBinding.filter(resGroupFilter);
 				}
 				
-				var oCombo2 = this.getView().byId("cb2");
+				/*var oCombo2 = this.getView().byId("cb2");
 				var bkTypeKey = oCombo2.getSelectedKey();
 				if (bkTypeKey) {
 					var bkTypeFilter = [new sap.ui.model.Filter("BKTYPE", "EQ", bkTypeKey)];
 					var oCalendarRow = this.getView().byId("myCalRow");
 					var oBindingApp = oCalendarRow.getBinding("appointments");
 					oBindingApp.filter(bkTypeFilter);
-				}
+				}*/
 			}
 		});
 	});
