@@ -1,4 +1,4 @@
-ID: iT-Staffing
+ID: iT-Forecasting
 _schema-version: '2.1'
 version: 0.0.1
 modules:
@@ -7,7 +7,6 @@ modules:
     path: db
     requires:
       - name: hdi_db
-  
   - name: core_xsjs
     type: nodejs
     path: core_xsjs
@@ -41,3 +40,4 @@ resources:
     parameters:
       service: sapui5_sb
       service-plan: sapui5-1.60
+description: Itelligence resource planning calendar

@@ -10,6 +10,7 @@ sap.ui.define([
 		metadata: {
 			manifest: "json"
 		},
+		
 		init: function () {
 			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);
@@ -20,9 +21,21 @@ sap.ui.define([
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
 		},
+		
 		destroy: function() {
 			// call the base component's destroy function
 			UIComponent.prototype.destroy.apply(this, arguments);
+		},
+		
+		getContentDensityClass : function () {
+			if (!this._sContentDensityClass) {
+				if (!Device.support.touch) {
+					this._sContentDensityClass = "sapUiSizeCompact";
+				} else {
+					this._sContentDensityClass = "sapUiSizeCozy";
+				}
+			}
+			return this._sContentDensityClass;
 		}
 	});
 });

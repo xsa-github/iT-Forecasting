@@ -1,41 +1,58 @@
 sap.ui.define([
 		"sap/ui/core/mvc/Controller",
-		"sap/m/MessageBox"
+		"sap/m/MessageBox",
+		"sap/ui/model/json/JSONModel",
+		"sap/ui/unified/library",
+		"sap/m/library",
+		"../model/formatter"
 	],
-	function (Controller, MessageBox) {
+	function (Controller, MessageBox, JSONModel, unifiedLibrary, mLibrary, formatter) {
 		"use strict";
 
 		return Controller.extend("calendar-app.webui5.controller.Calendar", {
+			formatter: formatter,
+
 			onInit: function () {
+				// Set the content density
+				this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
+
 				// Grab the OData Model
-				var oModel = this.getOwnerComponent().getModel();
-				
+				var oCalModel = this.getOwnerComponent().getModel();
+
 				// Grab the JSON Model
-				var fModel = this.getOwnerComponent().getModel("filterData");
-				
+				var oFilterModel = this.getOwnerComponent().getModel("filterData");
+
 				// Get query Parameter and set as property of the JSON model
 				var resGroup = jQuery.sap.getUriParameters().get("rg");
 				if (!resGroup) {
 					resGroup = "AMS ABAP";
 				}
-				
+
 				// Bind the Filters
 				var oCombo1 = this.getView().byId("cb1");
-				oCombo1.setModel(fModel);
+				oCombo1.setModel(oFilterModel);
 				oCombo1.setSelectedKey(resGroup);
-				
-				var oCombo2 = this.getView().byId("cb2");
-				oCombo2.setModel(fModel);
-				
-				var oCombo3 = this.getView().byId("cb3");
-				oCombo3.setModel(fModel);
+
+				var oCombo3 = this.getView().byId("cb2");
+				oCombo3.setModel(oFilterModel);
 
 				// Load the Calendar
 				var oCalendar = this.getView().byId("myCal");
-				oCalendar.setModel(oModel);
-				oCalendar.setBuiltInViews([sap.m.PlanningCalendarBuiltInView.Day,sap.m.PlanningCalendarBuiltInView.Week,sap.m.PlanningCalendarBuiltInView.OneMonth]);
+				oCalendar.setModel(oCalModel);
+				oCalendar.setBuiltInViews([sap.m.PlanningCalendarBuiltInView.Week, sap.m.PlanningCalendarBuiltInView.OneMonth]);
+				
+				// Set Legend State Model
+				var oStateModel = new JSONModel();
+				oStateModel.setData({
+					legendShown: false
+				});
+				this.getView().setModel(oStateModel, "stateModel");
+				
+				// Set Legend Binding
+				var oLegend = this.getView().byId("PlanningCalendarLegend");
+				oLegend.setModel(oFilterModel);
 			},
-			
+
 			onBeforeRendering: function () {
 				this.filterCalendar();
 			},
@@ -56,7 +73,7 @@ sap.ui.define([
 			onSearch: function () {
 				this.filterCalendar();
 			},
-			
+
 			/*
 			Apply filters to the Calendar when the selection changes.
 			 */
@@ -70,15 +87,6 @@ sap.ui.define([
 					var oBinding = oCalendar.getBinding("rows");
 					oBinding.filter(resGroupFilter);
 				}
-				
-				/*var oCombo2 = this.getView().byId("cb2");
-				var bkTypeKey = oCombo2.getSelectedKey();
-				if (bkTypeKey) {
-					var bkTypeFilter = [new sap.ui.model.Filter("BKTYPE", "EQ", bkTypeKey)];
-					var oCalendarRow = this.getView().byId("myCalRow");
-					var oBindingApp = oCalendarRow.getBinding("appointments");
-					oBindingApp.filter(bkTypeFilter);
-				}*/
 			}
 		});
 	});

@@ -1,55 +1,70 @@
-<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:unified="sap.ui.unified" xmlns:fb="sap.ui.comp.filterbar" xmlns:core="sap.ui.core"
-	xmlns:html="http://www.w3.org/1999/xhtml" controllerName="calendar-app.webui5.controller.Calendar" displayBlock="true">
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:unified="sap.ui.unified" xmlns:fb="sap.ui.comp.filterbar" xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="calendar-app.webui5.controller.Calendar"
+	displayBlock="true">
 	<App id="idAppControl">
 		<pages>
 			<Page title="{i18n>title}">
 				<headerContent>
-					<Image src="/webapp/img/itelligence.gif" width="200px" />
+					<FlexBox height="100%"	alignItems="Center" justifyContent="End">
+						<items>
+							<ToggleButton pressed="{path: 'stateModel>/legendShown'}" icon="sap-icon://legend" text="Legend" class="sapUiSmallMarginEnd"/>
+							<Image class="itelliLogo" src="/webapp/img/itelligence.gif" width="150px"/>
+						</items>
+					</FlexBox>
 				</headerContent>
-				<content>
-					<fb:FilterBar search="onSearch" showFilterConfiguration="false">
-						<fb:filterItems>
-							<fb:FilterItem name="ResParent" label="Resource Parent" labelTooltip="Resource Parent" mandatory="false">
-								<fb:control>
-									<ComboBox id="cb3" items="{path: '/ResourceParent'}">
-										<core:Item key="{key}" text="{text}"/>
-									</ComboBox>
-								</fb:control>
-							</fb:FilterItem>
-							<fb:FilterItem name="ResGroup" label="Resource Group" labelTooltip="Resource Group" mandatory="true">
-								<fb:control>
-									<ComboBox id="cb1" items="{path: '/ResourceGroup'}">
-										<core:Item key="{key}" text="{text}"/>
-									</ComboBox>
-								</fb:control>
-							</fb:FilterItem>
-							<fb:FilterItem name="EmpID" label="Employee ID" labelTooltip="Employee ID" mandatory="false">
-								<fb:control>
-									<Input type="Text"/>
-								</fb:control>
-							</fb:FilterItem>
-							<fb:FilterItem name="BkType" label="Booking Type" labelTooltip="Booking Type" mandatory="false">
-								<fb:control>
-									<ComboBox id="cb2" items="{path: '/BookingType'}">
-										<core:Item key="{key}" text="{text}"/>
-									</ComboBox>
-								</fb:control>
-							</fb:FilterItem>
-						</fb:filterItems>
-					</fb:FilterBar>
-					<PlanningCalendar id="myCal" rows="{path: '/Employee'}" stickyHeader="true" showWeekNumbers="true"
-						appointmentSelect="handleAppointmentSelect" viewKey="Day">
-						<rows>
-							<PlanningCalendarRow title="{EMPNAME}" appointments="{path: 'Booking', templateShareable: 'true'}"
-								tooltip="{EMPRESOURCEGROUP}">
-								<appointments>
-									<unified:CalendarAppointment startDate="{BKSTARTDATETIME}" endDate="{BKENDDATETIME}" title="{BKCUSTOMERNAME}"
-										tooltip="{BKWBS} {BKWBSDESC}"></unified:CalendarAppointment>
-								</appointments>
-							</PlanningCalendarRow>
-						</rows>
-					</PlanningCalendar>
-				</content>
+				<l:DynamicSideContent id="DynamicSideContent" class="sapUiDSCExplored sapUiContentPadding" sideContentVisibility="AlwaysShow"
+					showSideContent="{path: 'stateModel>/legendShown'}" containerQuery="true" breakpointChanged="updateToggleButtonState">
+					<l:mainContent>
+						<fb:FilterBar search="onSearch" showFilterConfiguration="false">
+							<fb:filterItems>
+								<fb:FilterItem name="ResParent" label="Resource Parent" labelTooltip="Resource Parent" mandatory="false">
+									<fb:control>
+										<ComboBox id="cb2" items="{path: '/ResourceParent'}" selectedKey="1">
+											<core:Item key="{key}" text="{text}"/>
+										</ComboBox>
+									</fb:control>
+								</fb:FilterItem>
+								<fb:FilterItem name="ResGroup" label="Resource Group" labelTooltip="Resource Group" mandatory="true">
+									<fb:control>
+										<ComboBox id="cb1" items="{path: '/ResourceGroup'}">
+											<core:Item key="{key}" text="{text}"/>
+										</ComboBox>
+									</fb:control>
+								</fb:FilterItem>
+								<fb:FilterItem name="EmpID" label="Employee ID" labelTooltip="Employee ID" mandatory="false">
+									<fb:control>
+										<Input id="inEmpid" type="Text"/>
+									</fb:control>
+								</fb:FilterItem>
+							</fb:filterItems>
+						</fb:FilterBar>
+						<PlanningCalendar id="myCal" rows="{path: '/Employee'}" stickyHeader="true" showWeekNumbers="true" viewKey="Day"
+							appointmentSelect="handleAppointmentSelect" appointmentsReducedHeight="true" legend="PlanningCalendarLegend">
+							<views>
+								<PlanningCalendarView key="M" intervalType="Month" description="1 Quarter" intervalsS="3" intervalsM="3" intervalsL="3"
+									showSubIntervals="true"></PlanningCalendarView>
+							</views>
+							<rows>
+								<PlanningCalendarRow id="myCalRow" title="{EMPNAME}" appointments="{path: 'Booking', templateShareable: 'true'}" tooltip="{EMPRESOURCEGROUP}">
+									<appointments>
+										<unified:CalendarAppointment startDate="{path: 'BKSTARTDATETIME', formatter: '.formatter.startTimeCorrection'}"
+											endDate="{path: 'BKENDDATETIME', formatter: '.formatter.endTimeCorrection'}"
+											title="{path: 'BKCUSTOMERNAME', formatter: '.formatter.nullStringCorrection'}"
+											type="{path: 'BKTYPE', formatter: '.formatter.bookingTypeFix'}" tooltip="{BKWBS} {BKWBSDESC}"></unified:CalendarAppointment>
+									</appointments>
+								</PlanningCalendarRow>
+							</rows>
+						</PlanningCalendar>
+					</l:mainContent>
+					<l:sideContent width="150px">
+						<PlanningCalendarLegend id="PlanningCalendarLegend"	standardItems="Today,WorkingDay,NonWorkingDay"
+							appointmentItems="{path : '/BookingType', templateShareable: 'true'}">
+							<appointmentItems>
+								<unified:CalendarLegendItem text="{text}" type="{apptype}" tooltip="{key}" />
+							</appointmentItems>
+						</PlanningCalendarLegend>
+					</l:sideContent>
+				</l:DynamicSideContent>
 			</Page>
 		</pages>
 	</App>

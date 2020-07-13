@@ -1,1 +1,7 @@
 /* Enter your custom styles here */
+.sapUiDSC.sapUiContentPadding>div:first-child {
+    padding: 0 !important;
+}
+.itelliLogo {
+	margin-top:5px;
+}

@@ -1,5 +1,9 @@
 {
 	"ResourceParent": [{
+		"key": "1",
+		"text": " "
+	},
+	{
 		"key": "AMS Support",
 		"text": "AMS Support"
 	},
@@ -290,33 +294,38 @@
 	}],
 	
 	"BookingType": [{
+		"key": "1",
+		"text": " ",
+		"apptype" : "Type06"
+	},
+	{
 		"key": "Absence",
 		"text": "Absence",
-		"apptype" : "sap.ui.unified.CalendarDayType.Type01"
+		"apptype" : "Type07"
 	},
 	{
 		"key": "Business Development",
 		"text": "Business Development",
-		"apptype" : "sap.ui.unified.CalendarDayType.Type02"
+		"apptype" : "Type05"
 	},
 	{
 		"key": "Consulting",
 		"text": "Consulting",
-		"apptype" : "sap.ui.unified.CalendarDayType.Type03"
+		"apptype" : "Type01"
 	},
 	{
 		"key": "Focus List Util. Adj",
 		"text": "Focus List",
-		"apptype" : "sap.ui.unified.CalendarDayType.Type04"
+		"apptype" : "Type04"
 	},
 	{
 		"key": "Internal Work",
 		"text": "Internal Work",
-		"apptype" : "sap.ui.unified.CalendarDayType.Type04"
+		"apptype" : "Type04"
 	},
 	{
 		"key": "Not started leaver",
 		"text": "New Starter / Leaver",
-		"apptype" : "sap.ui.unified.CalendarDayType.Type05"
+		"apptype" : "Type06"
 	}]
 }
