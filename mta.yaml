@@ -9,10 +9,10 @@ modules:
       - name: hdi_db
         properties:
           TARGET_CONTAINER: '~{hdi-container-name}'
-      - name: cross-container-service-1
+      - name: itforecast_model
         group: SERVICE_REPLACEMENTS
         properties:
-          key: ServiceName_1
+          key: ItForecast_srv
           service: '~{consumed-service-name}'
   - name: core_xsjs
     type: nodejs
@@ -47,7 +47,7 @@ resources:
     parameters:
       service: sapui5_sb
       service-plan: sapui5-1.60
-  - name: cross-container-service-1
+  - name: itforecast_model
     parameters:
       service-name: hdi_db_itforecast_model
     properties:

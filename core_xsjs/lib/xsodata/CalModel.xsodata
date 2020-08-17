@@ -1,0 +1,7 @@
+service {
+	"Calendar.V_EMPLOYEE" as "Employee" key("EMPID") navigates ("Bookings" as "Booking");
+	"Calendar.V_BOOKING" as "Booking" key("EMPID","BKSTARTDATETIME","BKENDDATETIME");
+
+	association "Bookings" principal  "Employee"("EMPID")
+	multiplicity "1" dependent "Booking"("EMPID") multiplicity "*";
+}

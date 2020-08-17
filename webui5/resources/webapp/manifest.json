@@ -15,7 +15,7 @@
 		},
 		"dataSources": {
 			"calService": {
-				"uri": "/xsodata/Calendar.xsodata/",
+				"uri": "/xsodata/CalModel.xsodata/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0"

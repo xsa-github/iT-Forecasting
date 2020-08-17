@@ -35,16 +35,17 @@ sap.ui.define([], function () {
 			}
 		},
 		
-		bookingTypeFix: function (sType) {
+		bookingTypeFix: function (sType, sStatus) {
 			// Get the array of booking type values
 			var bkTypes = this.getOwnerComponent().getModel("filterData").getProperty("/BookingType");
 			
 			if (bkTypes instanceof Array) {
-				var defType = "Type06";
+				var defType = "Type03";
+				var typeMatch = sType + "|" + sStatus;
 				
 				// Search the array for the booking type
 				var foundRow = bkTypes.find(function(myRow) {
-					return myRow.key === sType;
+					return myRow.key === typeMatch;
 				});
 				
 				// return either the corresponding appointment type or the default

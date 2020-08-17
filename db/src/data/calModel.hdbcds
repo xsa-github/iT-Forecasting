@@ -1,0 +1,27 @@
+using "CVC_MDL_RPT_EMPLOYEE" as Header;
+using "CVC_MDL_RPT_BOOKINGS" as Item;
+
+context Calendar {
+    define view V_EMPLOYEE as
+        select from Header
+        {
+            "Header"."EmpID" as "EMPID",
+            "Header"."EmpName" as "EMPNAME",
+            "Header"."EmpResourceGrp" as "EMPRESOURCEGRP",
+            "Header"."EmpResourceParentGrp" as "EMPRESOURCEPARENT"
+        };
+    
+    define view V_BOOKING as
+    	select from Item
+    	{
+    		"Item"."BkEmpID" as "EMPID",
+    		"Item"."BkStartDateTime" as "BKSTARTDATETIME",
+    		"Item"."BkEndDateTime" as "BKENDDATETIME",
+    		"Item"."BkType" as "BKTYPE",
+    		"Item"."BkStatus" as "BKSTATUS",
+    		"Item"."BkCustomerNumber" as "BKCUSTOMER",
+    		"Item"."BkCustomerName" as "BKCUSTOMERNAME",
+    		"Item"."BkWBS" as "BKWBS",
+    		"Item"."BkWBSDesc" as "BKWBSDESC"
+    	};
+}

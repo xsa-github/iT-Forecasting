@@ -1,7 +1,7 @@
 {
-  "ServiceName_1": {
+  "ItForecast_srv": {
     "object_owner" : {
-      "container_roles":[ "default_access_role"]
+      "container_roles":[ "default_access_role_g#"]
     },
     "application_user" : {
       "container_roles":["default_access_role"]

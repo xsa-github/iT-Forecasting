@@ -12,6 +12,14 @@
 		"text": "Analytics"
 	},
 	{
+		"key": "Consulting Operations",
+		"text": "Consulting Operations"
+	},
+	{
+		"key": "Contractors",
+		"text": "Contractors"
+	},
+	{
 		"key": "Customer Experience",
 		"text": "Customer Experience"
 	},
@@ -28,8 +36,16 @@
 		"text": "Digital Core"
 	},
 	{
+		"key": "InterCo Group",
+		"text": "InterCo Group"
+	},
+	{
 		"key": "InterCo India",
 		"text": "InterCo India"
+	},
+	{
+		"key": "Interco Weave",
+		"text": "Interco Weave"
 	},
 	{
 		"key": "People",
@@ -38,10 +54,6 @@
 	{
 		"key": "Platform",
 		"text": "Platform"
-	},
-	{
-		"key": "VA Data",
-		"text": "VA Data"
 	},
 	{
 		"key": "Value Acceleration",
@@ -67,6 +79,14 @@
 	{
 		"key": "AMS SDM Team",
 		"text": "AMS SDM"
+	},
+	{
+		"key": "AMS Support",
+		"text": "AMS Support"
+	},
+	{
+		"key": "Analytics",
+		"text": "Analytics"
 	},
 	{
 		"key": "BA - Contractors",
@@ -101,8 +121,20 @@
 		"text": "BA Reporting"
 	},
 	{
+		"key": "Business Development",
+		"text": "Business Development"
+	},
+	{
+		"key": "Consulting Operations",
+		"text": "Consulting Operations"
+	},
+	{
 		"key": "Consulting Operations - InterCo India",
 		"text": "Consulting Operations I/C India"
+	},
+	{
+		"key": "Contractors",
+		"text": "Contractors"
 	},
 	{
 		"key": "Cust Exp - C4C",
@@ -113,12 +145,12 @@
 		"text": "Cx Contractors"
 	},
 	{
-		"key": "Customer Exp - InterCo Group",
-		"text": "Cx I/C Group"
-	},
-	{
 		"key": "Customer Exp - InterCo Group IN",
 		"text": "Cx I/C India"
+	},
+	{
+		"key": "Customer Exp - InterCo Weave",
+		"text": "Cx I/C Weave"
 	},
 	{
 		"key": "DEV - Contractors",
@@ -141,12 +173,32 @@
 		"text": "DEV I/C India"
 	},
 	{
-		"key": "Development - itelli",
-		"text": "Development Itelli"
+		"key": "DEV - InterCo Weave",
+		"text": "DEV I/C Weave"
 	},
 	{
-		"key": "Development - Weave",
-		"text": "Development Weave"
+		"key": "DM - Contractors",
+		"text": "DM Contractors"
+	},
+	{
+		"key": "DM - InterCo Group",
+		"text": "DM I/C Group"
+	},
+	{
+		"key": "DM - InterCo Group NL BE",
+		"text": "DM I/C NL BE"
+	},
+	{
+		"key": "Delivery Management",
+		"text": "Delivery Management"
+	},
+	{
+		"key": "Development - itelli",
+		"text": "Development itelli"
+	},
+	{
+		"key": "Digital Core",
+		"text": "Digital Core"
 	},
 	{
 		"key": "Digital Core -  InterCo India",
@@ -197,12 +249,12 @@
 		"text": "Digital Core Supply Chain"
 	},
 	{
-		"key": "DM - Contractors",
-		"text": "DM Contractors"
+		"key": "InterCo Group",
+		"text": "I/C Group"
 	},
 	{
-		"key": "DM - InterCo Group NL BE",
-		"text": "DM - I/C NL BE"
+		"key": "Interco Weave",
+		"text": "I/C Weave"
 	},
 	{
 		"key": "People - Contractors",
@@ -285,47 +337,48 @@
 		"text": "VA I/C IN"
 	},
 	{
-		"key": "VA - Test Assurance",
-		"text": "VA Test Assurance"
-	},
-	{
-		"key": "VA Data - Group",
-		"text": "VA Data Group"
+		"key": "Value Acceleration",
+		"text": "Value Acceleration"
 	}],
 	
 	"BookingType": [{
-		"key": "1",
-		"text": " ",
-		"apptype" : "Type06"
-	},
-	{
-		"key": "Absence",
-		"text": "Absence",
-		"apptype" : "Type07"
-	},
-	{
-		"key": "Business Development",
-		"text": "Business Development",
-		"apptype" : "Type05"
-	},
-	{
-		"key": "Consulting",
-		"text": "Consulting",
+		"key": "Absence|Planned",
+		"text": "Planned Absence",
 		"apptype" : "Type01"
 	},
 	{
-		"key": "Focus List Util. Adj",
-		"text": "Focus List",
-		"apptype" : "Type04"
+		"key": "Absence|Confirmed",
+		"text": "Confirmed Absence",
+		"apptype" : "Type05"
 	},
 	{
-		"key": "Internal Work",
-		"text": "Internal Work",
-		"apptype" : "Type04"
+		"key": "Booking|Planned",
+		"text": "Planned Booking",
+		"apptype" : "Type09"
 	},
 	{
-		"key": "Not started leaver",
-		"text": "New Starter / Leaver",
+		"key": "Booking|Confirmed",
+		"text": "Confirmed Booking",
 		"apptype" : "Type06"
+	},
+	{
+		"key": "Internal work|Planned",
+		"text": "Planned Internal Work",
+		"apptype" : "Type08"
+	},
+	{
+		"key": "Internal work|Confirmed",
+		"text": "Confirmed Internal Work",
+		"apptype" : "Type07"
+	},
+	{
+		"key": "Not started leaver|Planned",
+		"text": "Planned Starter / Leaver",
+		"apptype" : "Type02"
+	},
+	{
+		"key": "Not started leaver|Confirmed",
+		"text": "Confirmed Starter / Leaver",
+		"apptype" : "Type04"
 	}]
 }

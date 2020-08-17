@@ -1,4 +1,4 @@
-<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:unified="sap.ui.unified" xmlns:fb="sap.ui.comp.filterbar" xmlns:l="sap.ui.layout"
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:unified="sap.ui.unified" xmlns:fb="sap.ui.comp.filterbar" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" xmlns:l="sap.ui.layout"
 	xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="calendar-app.webui5.controller.Calendar"
 	displayBlock="true">
 	<App id="idAppControl">
@@ -45,12 +45,12 @@
 									showSubIntervals="true"></PlanningCalendarView>
 							</views>
 							<rows>
-								<PlanningCalendarRow id="myCalRow" title="{EMPNAME}" appointments="{path: 'Booking', templateShareable: 'true'}" tooltip="{EMPRESOURCEGROUP}">
+								<PlanningCalendarRow id="myCalRow" title="{EMPNAME}" text="{EMPID}" appointments="{path: 'Booking', templateShareable: 'true'}" tooltip="{EMPRESOURCEGROUP}">
 									<appointments>
 										<unified:CalendarAppointment startDate="{path: 'BKSTARTDATETIME', formatter: '.formatter.startTimeCorrection'}"
 											endDate="{path: 'BKENDDATETIME', formatter: '.formatter.endTimeCorrection'}"
 											title="{path: 'BKCUSTOMERNAME', formatter: '.formatter.nullStringCorrection'}"
-											type="{path: 'BKTYPE', formatter: '.formatter.bookingTypeFix'}" tooltip="{BKWBS} {BKWBSDESC}"></unified:CalendarAppointment>
+											type="{parts:[{path : 'BKTYPE'}, {path : 'BKSTATUS'}], formatter: '.formatter.bookingTypeFix'}" tooltip="{BKWBS} {BKWBSDESC}"></unified:CalendarAppointment>
 									</appointments>
 								</PlanningCalendarRow>
 							</rows>

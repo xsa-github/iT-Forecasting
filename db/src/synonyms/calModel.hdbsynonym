@@ -1,14 +1,14 @@
 {
-  "CVD_MDL_RPT_EMPLOYEE": {
+  "CVC_MDL_RPT_EMPLOYEE": {
     "target": {
-      "object": "CVD_MDL_RPT_EMPLOYEE",
+      "object": "CVC_MDL_RPT_EMPLOYEE",
       "schema": "DB_ITFORECAST_MODEL",
       "database": "HED"
     }
   },
-  "CVD_MDL_RPT_BOOKINGS": {
+  "CVC_MDL_RPT_BOOKINGS": {
     "target": {
-      "object": "CVD_MDL_RPT_BOOKINGS",
+      "object": "CVC_MDL_RPT_BOOKINGS",
       "schema": "DB_ITFORECAST_MODEL",
       "database": "HED"
     }
