@@ -1,4 +1,4 @@
-<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:unified="sap.ui.unified" xmlns:fb="sap.ui.comp.filterbar" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" xmlns:l="sap.ui.layout"
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:unified="sap.ui.unified" xmlns:fb="sap.ui.comp.filterbar" xmlns:l="sap.ui.layout"
 	xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="calendar-app.webui5.controller.Calendar"
 	displayBlock="true">
 	<App id="idAppControl">
@@ -15,18 +15,18 @@
 				<l:DynamicSideContent id="DynamicSideContent" class="sapUiDSCExplored sapUiContentPadding" sideContentVisibility="AlwaysShow"
 					showSideContent="{path: 'stateModel>/legendShown'}" containerQuery="true" breakpointChanged="updateToggleButtonState">
 					<l:mainContent>
-						<fb:FilterBar search="onSearch" showFilterConfiguration="false">
+						<fb:FilterBar id="filterBar" search="onSearch" showFilterConfiguration="false" filterChange="onFilterChange">
 							<fb:filterItems>
 								<fb:FilterItem name="ResParent" label="Resource Parent" labelTooltip="Resource Parent" mandatory="false">
 									<fb:control>
-										<ComboBox id="cb2" items="{path: '/ResourceParent'}" selectedKey="1">
+										<ComboBox id="cb_rp" items="{path: '/ResourceParent'}" selectedKey="1" change="onChange">
 											<core:Item key="{key}" text="{text}"/>
 										</ComboBox>
 									</fb:control>
 								</fb:FilterItem>
 								<fb:FilterItem name="ResGroup" label="Resource Group" labelTooltip="Resource Group" mandatory="true">
 									<fb:control>
-										<ComboBox id="cb1" items="{path: '/ResourceGroup'}">
+										<ComboBox id="cb_rg" items="{path: '/ResourceGroup'}" change="onChange">
 											<core:Item key="{key}" text="{text}"/>
 										</ComboBox>
 									</fb:control>
