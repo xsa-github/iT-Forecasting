@@ -342,8 +342,8 @@
 	}],
 	
 	"BookingType": [{
-		"key": "Absence|Planned",
-		"text": "Planned Absence",
+		"key": "Bank Holiday|Confirmed",
+		"text": "Bank Holiday",
 		"apptype" : "Type01"
 	},
 	{
@@ -352,33 +352,33 @@
 		"apptype" : "Type05"
 	},
 	{
-		"key": "Booking|Planned",
-		"text": "Planned Booking",
+		"key": "Consulting|Planned",
+		"text": "Planned Consulting",
 		"apptype" : "Type09"
 	},
 	{
-		"key": "Booking|Confirmed",
-		"text": "Confirmed Booking",
+		"key": "Consulting|Confirmed",
+		"text": "Confirmed Consulting",
 		"apptype" : "Type06"
 	},
 	{
-		"key": "Internal work|Planned",
-		"text": "Planned Internal Work",
+		"key": "Focus List Util. Adj|Confirmed",
+		"text": "Focus List",
 		"apptype" : "Type08"
 	},
 	{
-		"key": "Internal work|Confirmed",
-		"text": "Confirmed Internal Work",
+		"key": "Internal Work|Confirmed",
+		"text": "Internal Work",
 		"apptype" : "Type07"
 	},
 	{
-		"key": "Not started leaver|Planned",
-		"text": "Planned Starter / Leaver",
+		"key": "Non-Working Day|Confirmed",
+		"text": "Non-working Day",
 		"apptype" : "Type02"
 	},
 	{
 		"key": "Not started leaver|Confirmed",
-		"text": "Confirmed Starter / Leaver",
+		"text": "New Starter / Leaver",
 		"apptype" : "Type04"
 	}]
 }
