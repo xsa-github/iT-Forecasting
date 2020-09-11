@@ -36,11 +36,11 @@ sap.ui.define([
 
 				// Bind the Filters
 				var oCombo1 = this.getView().byId("cb_rg");
-				oCombo1.setModel(oFilterModel);
+				oCombo1.setModel(oCalModel);
 				oCombo1.setSelectedKey(resGroup);
 
 				var oCombo2 = this.getView().byId("cb_rp");
-				oCombo2.setModel(oFilterModel);
+				oCombo2.setModel(oCalModel);
 
 				// Load the Calendar
 				var oCalendar = this.getView().byId("myCal");

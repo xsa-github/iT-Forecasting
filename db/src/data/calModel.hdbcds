@@ -24,4 +24,16 @@ context Calendar {
     		"Item"."BkWBS" as "BKWBS",
     		"Item"."BkWBSDesc" as "BKWBSDESC"
     	};
+    
+    define view V_RESPARENT as
+    	select from Header
+    	distinct {
+    		"Header"."EmpResourceParentGrp" as "EMPRESOURCEPARENT"
+    	};
+    
+    define view V_RESGROUP as
+    	select from Header
+    	distinct {
+    		"Header"."EmpResourceGrp" as "EMPRESOURCEGRP"
+    	};
 }

@@ -19,15 +19,15 @@
 							<fb:filterItems>
 								<fb:FilterItem name="ResParent" label="Resource Parent" labelTooltip="Resource Parent" mandatory="false">
 									<fb:control>
-										<ComboBox id="cb_rp" items="{path: '/ResourceParent'}" selectedKey="1" change="onChange">
-											<core:Item key="{key}" text="{text}"/>
+										<ComboBox id="cb_rp" items="{path: '/ResParent'}" selectedKey="1" change="onChange">
+											<core:Item key="{EMPRESOURCEPARENT}" text="{EMPRESOURCEPARENT}"/>
 										</ComboBox>
 									</fb:control>
 								</fb:FilterItem>
 								<fb:FilterItem name="ResGroup" label="Resource Group" labelTooltip="Resource Group" mandatory="true">
 									<fb:control>
-										<ComboBox id="cb_rg" items="{path: '/ResourceGroup'}" change="onChange">
-											<core:Item key="{key}" text="{text}"/>
+										<ComboBox id="cb_rg" items="{path: '/ResGroup'}" change="onChange">
+											<core:Item key="{EMPRESOURCEGRP}" text="{EMPRESOURCEGRP}"/>
 										</ComboBox>
 									</fb:control>
 								</fb:FilterItem>
