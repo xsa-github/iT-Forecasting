@@ -17,14 +17,14 @@
 					<l:mainContent>
 						<fb:FilterBar id="filterBar" search="onSearch" showFilterConfiguration="false" filterChange="onFilterChange">
 							<fb:filterItems>
-								<fb:FilterItem name="ResParent" label="Resource Parent" labelTooltip="Resource Parent" mandatory="false">
+								<fb:FilterItem name="ResParent" label="Practice" labelTooltip="Practice" mandatory="false">
 									<fb:control>
 										<ComboBox id="cb_rp" items="{path: '/ResParent'}" selectedKey="1" change="onChange">
 											<core:Item key="{EMPRESOURCEPARENT}" text="{EMPRESOURCEPARENT}"/>
 										</ComboBox>
 									</fb:control>
 								</fb:FilterItem>
-								<fb:FilterItem name="ResGroup" label="Resource Group" labelTooltip="Resource Group" mandatory="true">
+								<fb:FilterItem name="ResGroup" label="Team" labelTooltip="Team" mandatory="false">
 									<fb:control>
 										<ComboBox id="cb_rg" items="{path: '/ResGroup'}" change="onChange">
 											<core:Item key="{EMPRESOURCEGRP}" text="{EMPRESOURCEGRP}"/>
@@ -49,7 +49,7 @@
 									<appointments>
 										<unified:CalendarAppointment startDate="{path: 'BKSTARTDATETIME', formatter: '.formatter.startTimeCorrection'}"
 											endDate="{path: 'BKENDDATETIME', formatter: '.formatter.endTimeCorrection'}"
-											title="{path: 'BKCUSTOMERNAME', formatter: '.formatter.nullStringCorrection'}"
+											title="{path: 'BKWBSDESC', formatter: '.formatter.nullStringCorrection'}"
 											type="{parts:[{path : 'BKTYPE'}, {path : 'BKSTATUS'}], formatter: '.formatter.bookingTypeFix'}" tooltip="{BKWBS} {BKWBSDESC}"></unified:CalendarAppointment>
 									</appointments>
 								</PlanningCalendarRow>
