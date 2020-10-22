@@ -31,14 +31,14 @@
 										</ComboBox>
 									</fb:control>
 								</fb:FilterItem>
-								<fb:FilterItem name="EmpID" label="Employee ID" labelTooltip="Employee ID" mandatory="false">
+								<fb:FilterItem name="EmpName" label="Employee Name" labelTooltip="Employee Name" mandatory="false">
 									<fb:control>
-										<Input id="inEmpid" type="Text"/>
+										<Input id="inEmpName" type="Text" liveChange="onChange"/>
 									</fb:control>
 								</fb:FilterItem>
 							</fb:filterItems>
 						</fb:FilterBar>
-						<PlanningCalendar id="myCal" rows="{path: '/Employee'}" stickyHeader="true" showWeekNumbers="true" viewKey="Day"
+						<PlanningCalendar id="myCal" rows="{path: '/Employee', sorter: {path: 'EMPNAME'}}" stickyHeader="true" showWeekNumbers="true" viewKey="Day"
 							appointmentSelect="handleAppointmentSelect" appointmentsReducedHeight="true" legend="PlanningCalendarLegend" showEmptyIntervalHeaders="false">
 							<views>
 								<PlanningCalendarView key="M" intervalType="Month" description="1 Quarter" intervalsS="3" intervalsM="3" intervalsL="3"

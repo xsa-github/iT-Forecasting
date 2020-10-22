@@ -87,22 +87,25 @@ sap.ui.define([
 				var sComboRp = sViewId + "--cb_rp";
 				var sComboRg = sViewId + "--cb_rg";
 				var oComboGroup = this.getView().byId("cb_rg");
-				var oInpEmpid = this.getView().byId("inEmpid");
+				var oInpEmpName = this.getView().byId("inEmpName");
 					
 				// query which filter item invoked the event
 				if (this.sFilterID === sComboRp){
 					// when the resource parent changes, reset the resource group 
 					oComboGroup.clearSelection();
 					oComboGroup.setValue();
-					oInpEmpid.setValue();
+					oInpEmpName.setValue();
 				}
 				else if (this.sFilterID === sComboRg){
 					// when the resource group changes, reset the employee ID
-					oInpEmpid.setValue();
+					oInpEmpName.setValue();
 				}
 				
 				// Reset the ID after each invocation
 				this.sFilterID = "";
+				
+				// Now Trigger the filtering
+				this.filterCalendar();
 			},
 
 			onSearch: function () {
@@ -115,13 +118,13 @@ sap.ui.define([
 			filterCalendar: function () {
 				var oComboRp = this.getView().byId("cb_rp");
 				var oComboRg = this.getView().byId("cb_rg");
-				var oInpEmpid = this.getView().byId("inEmpid");
+				var oInpEmpName = this.getView().byId("inEmpName");
 				var oCalendar = this.getView().byId("myCal");
 				var oBinding = oCalendar.getBinding("rows");
 				
 				var sParentKey = oComboRp.getSelectedKey();
 				var sGroupKey = oComboRg.getSelectedKey();
-				var sEmpidVal = oInpEmpid.getValue();
+				var sEmpName = oInpEmpName.getValue();
 				
 				var oFilter = [];
 				
@@ -133,8 +136,8 @@ sap.ui.define([
 					oFilter.push(new sap.ui.model.Filter("EMPRESOURCEPARENT", "EQ", sParentKey));
 				}
 				
-				if (sEmpidVal !== "") {
-					oFilter.push(new sap.ui.model.Filter("EMPID", sap.ui.model.FilterOperator.Contains, sEmpidVal));
+				if (sEmpName !== "") {
+					oFilter.push(new sap.ui.model.Filter("EMPNAME", sap.ui.model.FilterOperator.Contains, sEmpName));
 				}
 				
 				if (oFilter.length > 0) {
