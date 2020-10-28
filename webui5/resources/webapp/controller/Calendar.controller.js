@@ -13,7 +13,7 @@ sap.ui.define([
 			formatter: formatter,
 
 			onInit: function () {
-				
+
 				// Set the content density
 				this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 
@@ -28,7 +28,7 @@ sap.ui.define([
 				if (!resGroup) {
 					resGroup = "AMS ABAP";
 				}
-				
+
 				// Instanciate the filter bar
 				this.oFilterBar = this.getView().byId("filterBar");
 				this.oFilterBar.fireInitialise();
@@ -46,14 +46,14 @@ sap.ui.define([
 				var oCalendar = this.getView().byId("myCal");
 				oCalendar.setModel(oCalModel);
 				oCalendar.setBuiltInViews([sap.m.PlanningCalendarBuiltInView.Week, sap.m.PlanningCalendarBuiltInView.OneMonth]);
-				
+
 				// Set Legend State Model
 				var oStateModel = new JSONModel();
 				oStateModel.setData({
 					legendShown: false
 				});
 				this.getView().setModel(oStateModel, "stateModel");
-				
+
 				// Set Legend Binding
 				var oLegend = this.getView().byId("PlanningCalendarLegend");
 				oLegend.setModel(oFilterModel);
@@ -75,32 +75,41 @@ sap.ui.define([
 					}
 				}
 			},
-			
+
 			onChange: function (oEvent) {
 				// Store the ID of the invoker and then fire event of the filterbar
 				this.sFilterID = oEvent.getParameter("id");
 				this.oFilterBar.fireFilterChange(oEvent);
 			},
-			
+
 			onFilterChange: function (oEvent) {
 				var sViewId = this.getView().getId();
 				var sComboRp = sViewId + "--cb_rp";
 				var sComboRg = sViewId + "--cb_rg";
 				var oComboGroup = this.getView().byId("cb_rg");
 				var oInpEmpid = this.getView().byId("inEmpid");
-					
+
 				// query which filter item invoked the event
-				if (this.sFilterID === sComboRp){
+				if (this.sFilterID === sComboRp) {
 					// when the resource parent changes, reset the resource group 
 					oComboGroup.clearSelection();
 					oComboGroup.setValue();
 					oInpEmpid.setValue();
-				}
-				else if (this.sFilterID === sComboRg){
+
+					var oFilterRg = [];
+					var oCbRp = this.getView().byId("cb_rp");
+					var pKey = oCbRp.getSelectedKey();
+					var oCbRg = this.getView().byId("cb_rg");
+					var oBindingRg = oCbRg.getBinding("items");
+					oFilterRg.push(new sap.ui.model.Filter("EMPRESOURCEGRP", "Contains", pKey));
+					oBindingRg.filter(new sap.ui.model.Filter(oFilterRg, true));
+
+				} else if (this.sFilterID === sComboRg) {
 					// when the resource group changes, reset the employee ID
 					oInpEmpid.setValue();
+
 				}
-				
+
 				// Reset the ID after each invocation
 				this.sFilterID = "";
 			},
@@ -118,25 +127,25 @@ sap.ui.define([
 				var oInpEmpid = this.getView().byId("inEmpid");
 				var oCalendar = this.getView().byId("myCal");
 				var oBinding = oCalendar.getBinding("rows");
-				
+
 				var sParentKey = oComboRp.getSelectedKey();
 				var sGroupKey = oComboRg.getSelectedKey();
 				var sEmpidVal = oInpEmpid.getValue();
-				
+
 				var oFilter = [];
-				
-				
+
 				if (sGroupKey !== "") {
 					oFilter.push(new sap.ui.model.Filter("EMPRESOURCEGRP", "EQ", sGroupKey));
-				}
-				else if (sParentKey !== "") {
+				} else if (sParentKey !== "") {
 					oFilter.push(new sap.ui.model.Filter("EMPRESOURCEPARENT", "EQ", sParentKey));
+				} else	{ 
+					oFilter.push(new sap.ui.model.Filter("EMPRESOURCEPARENT", "ALL"));
 				}
-				
+
 				if (sEmpidVal !== "") {
 					oFilter.push(new sap.ui.model.Filter("EMPID", sap.ui.model.FilterOperator.Contains, sEmpidVal));
 				}
-				
+
 				if (oFilter.length > 0) {
 					oBinding.filter(new sap.ui.model.Filter(oFilter, true));
 				}

@@ -5,7 +5,7 @@
 		<pages>
 			<Page title="{i18n>title}">
 				<headerContent>
-					<FlexBox height="100%"	alignItems="Center" justifyContent="End">
+					<FlexBox height="100%" alignItems="Center" justifyContent="End">
 						<items>
 							<ToggleButton pressed="{path: 'stateModel>/legendShown'}" icon="sap-icon://legend" text="Legend" class="sapUiSmallMarginEnd"/>
 							<Image class="itelliLogo" src="/webapp/img/itelligence.gif" width="150px"/>
@@ -38,14 +38,16 @@
 								</fb:FilterItem>
 							</fb:filterItems>
 						</fb:FilterBar>
-						<PlanningCalendar id="myCal" rows="{path: '/Employee'}" stickyHeader="true" showWeekNumbers="true" viewKey="Day"
-							appointmentSelect="handleAppointmentSelect" appointmentsReducedHeight="true" legend="PlanningCalendarLegend" showEmptyIntervalHeaders="false">
+						<PlanningCalendar id="myCal" rows="{path: '/Employee', sorter: { path: 'EMPNAME', descending: false}}" stickyHeader="true"
+							showWeekNumbers="true" viewKey="Day" appointmentSelect="handleAppointmentSelect" appointmentsReducedHeight="true"
+							legend="PlanningCalendarLegend" showEmptyIntervalHeaders="false">
 							<views>
 								<PlanningCalendarView key="M" intervalType="Month" description="1 Quarter" intervalsS="3" intervalsM="3" intervalsL="3"
 									showSubIntervals="true"></PlanningCalendarView>
 							</views>
 							<rows>
-								<PlanningCalendarRow id="myCalRow" title="{EMPNAME}" text="{EMPID}" appointments="{path: 'Booking', templateShareable: 'true'}" tooltip="{EMPRESOURCEGROUP}">
+								<PlanningCalendarRow id="myCalRow" title="{EMPNAME}" text="{EMPID}" appointments="{path: 'Booking', templateShareable: 'true'}"
+									tooltip="{EMPRESOURCEGROUP}">
 									<appointments>
 										<unified:CalendarAppointment startDate="{path: 'BKSTARTDATETIME', formatter: '.formatter.startTimeCorrection'}"
 											endDate="{path: 'BKENDDATETIME', formatter: '.formatter.endTimeCorrection'}"
@@ -57,10 +59,10 @@
 						</PlanningCalendar>
 					</l:mainContent>
 					<l:sideContent width="150px">
-						<PlanningCalendarLegend id="PlanningCalendarLegend"	standardItems="Today,WorkingDay,NonWorkingDay"
+						<PlanningCalendarLegend id="PlanningCalendarLegend" standardItems="Today,WorkingDay,NonWorkingDay"
 							appointmentItems="{path : '/BookingType', templateShareable: 'true'}">
 							<appointmentItems>
-								<unified:CalendarLegendItem text="{text}" type="{apptype}" tooltip="{key}" />
+								<unified:CalendarLegendItem text="{text}" type="{apptype}" tooltip="{key}"/>
 							</appointmentItems>
 						</PlanningCalendarLegend>
 					</l:sideContent>
