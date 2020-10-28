@@ -91,10 +91,10 @@ sap.ui.define([
 
 				// query which filter item invoked the event
 				if (this.sFilterID === sComboRp) {
-					// when the resource parent changes, reset the resource group 
+					// when the resource parent changes, reset the resource group & Employee ID
 					oComboGroup.clearSelection();
 					oComboGroup.setValue();
-					oInpEmpid.setValue();
+					oInpEmpid.removeAllTokens();
 
 					var oFilterRg = [];
 					var oCbRp = this.getView().byId("cb_rp");
@@ -106,12 +106,59 @@ sap.ui.define([
 
 				} else if (this.sFilterID === sComboRg) {
 					// when the resource group changes, reset the employee ID
-					oInpEmpid.setValue();
-
+					//oInpEmpid.setValue();
+					oInpEmpid.removeAllTokens();
 				}
-
 				// Reset the ID after each invocation
 				this.sFilterID = "";
+			},
+
+			onValueHelpRequest: function () {
+				var oInput = this.getView().byId("inEmpid");
+				var oCbGrp = this.getView().byId("cb_rg");
+				var oCbPra = this.getView().byId("cb_rp");
+				if (!this._oValueHelpDialog) {
+					this._oValueHelpDialog = new sap.ui.comp.valuehelpdialog.ValueHelpDialog("idValueHelp", {
+						key: "EMPID",
+						descriptionKey: "EMPNAME",
+						ok: function (oEvent) {
+							var aTokens = oEvent.getParameter("tokens");
+							oInput.setTokens(aTokens);
+							//Clear Pratcis and Teams values
+							if (aTokens.length !== 0) {
+								oCbGrp.clearSelection();
+								oCbGrp.setValue();
+								oCbPra.clearSelection();
+								oCbPra.setValue();
+							}
+							this.close();
+						},
+						cancel: function () {
+							oInput.removeAllTokens();
+							this.close();
+						}
+					});
+				}
+				//Bind the columns for table
+				var oColMod = new sap.ui.model.json.JSONModel();
+				oColMod.setData({
+					cols: [{
+						label: "Employee ID",
+						template: "EMPID"
+					}, {
+						label: "Employee Name",
+						template: "EMPNAME"
+					}]
+				});
+				var oTable = this._oValueHelpDialog.getTable();
+				oTable.setModel(oColMod, "columns");
+
+				//Create row model and bind to row aggregation table
+				var oRowModel = this.getOwnerComponent().getModel();
+				oTable.setModel(oRowModel);
+				oTable.bindRows("/Employee");
+
+				this._oValueHelpDialog.open();
 			},
 
 			onSearch: function () {
@@ -130,21 +177,27 @@ sap.ui.define([
 
 				var sParentKey = oComboRp.getSelectedKey();
 				var sGroupKey = oComboRg.getSelectedKey();
-				var sEmpidVal = oInpEmpid.getValue();
-
+				//var sEmpidVal = oInpEmpid.getValue();
+				var oTokens = oInpEmpid.getTokens();
 				var oFilter = [];
 
-				if (sGroupKey !== "") {
+				if (oTokens.length !== 0) {
+					// var fArr = [];
+					// for (var i = 0; i < oTokens.length; i++) {
+					// 	fArr[i] = new sap.ui.model.Filter("EMPID", "EQ", oTokens[i].mProperties.key);
+					// }
+					oFilter.push(new sap.ui.model.Filter("EMPID", "EQ", oTokens[0].mProperties.key));
+				} else if (sGroupKey !== "") {
 					oFilter.push(new sap.ui.model.Filter("EMPRESOURCEGRP", "EQ", sGroupKey));
 				} else if (sParentKey !== "") {
 					oFilter.push(new sap.ui.model.Filter("EMPRESOURCEPARENT", "EQ", sParentKey));
-				} else	{ 
+				} else {
 					oFilter.push(new sap.ui.model.Filter("EMPRESOURCEPARENT", "ALL"));
 				}
 
-				if (sEmpidVal !== "") {
-					oFilter.push(new sap.ui.model.Filter("EMPID", sap.ui.model.FilterOperator.Contains, sEmpidVal));
-				}
+				// if (sEmpidVal !== "") {
+				// 	oFilter.push(new sap.ui.model.Filter("EMPID", sap.ui.model.FilterOperator.Contains, sEmpidVal));
+				// }
 
 				if (oFilter.length > 0) {
 					oBinding.filter(new sap.ui.model.Filter(oFilter, true));

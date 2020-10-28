@@ -33,7 +33,7 @@
 								</fb:FilterItem>
 								<fb:FilterItem name="EmpID" label="Employee ID" labelTooltip="Employee ID" mandatory="false">
 									<fb:control>
-										<Input id="inEmpid" type="Text"/>
+										<MultiInput id="inEmpid" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onValueHelpRequest"/>
 									</fb:control>
 								</fb:FilterItem>
 							</fb:filterItems>
