@@ -1,0 +1,63 @@
+<core:FragmentDefinition
+		xmlns="sap.ui.comp.valuehelpdialog"
+		xmlns:m="sap.m"
+		xmlns:fb="sap.ui.comp.filterbar"
+		xmlns:core="sap.ui.core">
+	<ValueHelpDialog
+			title="Employee"
+			ok=".onValueHelpWithSuggestionsOkPress"
+			cancel=".onValueHelpWithSuggestionsCancelPress"
+			afterClose=".onValueHelpWithSuggestionsAfterClose"
+			supportRanges="true"
+			key="EMPID"
+			descriptionKey="EMPNAME"
+	>
+		<filterBar>
+			<fb:FilterBar advancedMode="true" search=".onFilterBarWithSuggestionsSearch">
+				<fb:filterGroupItems>
+					<fb:FilterGroupItem
+							groupName="__$INTERNAL$"
+							name="FilterBar.fragment"
+							label="Employee ID"
+							visibleInFilterBar="true"
+					>
+						<fb:control>
+							<m:Input id="inputEmployeeId"
+									 name="EMPID"
+									 showSuggestion="true"
+									 showValueHelp="false"
+									 suggestionItems="{
+										path: '/Employee',
+										sorter: { path: 'EMPID' }
+									}"
+							>
+								<core:Item key="{EMPID}" text="{EMPID}" />
+							</m:Input>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem
+							groupName="__$INTERNAL$"
+							name="EMPNAME"
+							label="Employee Name"
+							visibleInFilterBar="true"
+					>
+						<fb:control>
+							<m:Input id="inputEmployeeName"
+									 name="EMPNAME"
+									 showSuggestion="true"
+									 showValueHelp="false"
+									 suggestionItems="{
+										path: '/Employee',
+										sorter: { path: 'EMPNAME' }
+									}"
+							>
+								<core:Item key="{EMPNAME}" text="{EMPNAME}" />
+							</m:Input>
+						</fb:control>
+					</fb:FilterGroupItem>
+				</fb:filterGroupItems>
+			</fb:FilterBar>
+		</filterBar>
+	</ValueHelpDialog>
+</core:FragmentDefinition>
+

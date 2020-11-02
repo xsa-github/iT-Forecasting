@@ -4,9 +4,10 @@ sap.ui.define([
 		"sap/ui/model/json/JSONModel",
 		"sap/ui/unified/library",
 		"sap/m/library",
-		"../model/formatter"
-	],
-	function (Controller, MessageBox, JSONModel, unifiedLibrary, mLibrary, formatter) {
+		"../model/formatter",
+		"sap/m/SearchField" //Added
+	], //Added
+	function (Controller, MessageBox, JSONModel, unifiedLibrary, mLibrary, formatter, SearchField) {
 		"use strict";
 
 		return Controller.extend("calendar-app.webui5.controller.Calendar", {
@@ -114,30 +115,46 @@ sap.ui.define([
 			},
 
 			onValueHelpRequest: function () {
-				var oInput = this.getView().byId("inEmpid");
-				var oCbGrp = this.getView().byId("cb_rg");
-				var oCbPra = this.getView().byId("cb_rp");
+				// var oInput = this.getView().byId("inEmpid");
+				// var oCbGrp = this.getView().byId("cb_rg");
+				// var oCbPra = this.getView().byId("cb_rp");
+
+				//Added
+				this._oBasicSearchField = new SearchField({
+					showSearchButton: false
+				});
+
 				if (!this._oValueHelpDialog) {
-					this._oValueHelpDialog = new sap.ui.comp.valuehelpdialog.ValueHelpDialog("idValueHelp", {
-						key: "EMPID",
-						descriptionKey: "EMPNAME",
-						ok: function (oEvent) {
-							var aTokens = oEvent.getParameter("tokens");
-							oInput.setTokens(aTokens);
-							//Clear Pratcis and Teams values
-							if (aTokens.length !== 0) {
-								oCbGrp.clearSelection();
-								oCbGrp.setValue();
-								oCbPra.clearSelection();
-								oCbPra.setValue();
-							}
-							this.close();
-						},
-						cancel: function () {
-							oInput.removeAllTokens();
-							this.close();
-						}
-					});
+
+					// Calling Fragment
+					this._oValueHelpDialog = sap.ui.xmlfragment("sap.ui.comp.sample.valuehelpdialog.singleSelect.fragment.Filterbar", this);
+					this.getView().addDependent(this._oValueHelpDialog);
+
+					//Define filter bar
+					var oFilterBar = this._oValueHelpDialog.getFilterBar();
+					oFilterBar.setFilterBarExpanded(false);
+					oFilterBar.setBasicSearch(this._oBasicSearchField);
+
+					// this._oValueHelpDialog = new sap.ui.comp.valuehelpdialog.ValueHelpDialog("idValueHelp", {
+					// 	key: "EMPID",
+					// 	descriptionKey: "EMPNAME",
+					// 	ok: function (oEvent) {
+					// 		var aTokens = oEvent.getParameter("tokens");
+					// 		oInput.setTokens(aTokens);
+					// 		//Clear Pratcis and Teams values
+					// 		if (aTokens.length !== 0) {
+					// 			oCbGrp.clearSelection();
+					// 			oCbGrp.setValue();
+					// 			oCbPra.clearSelection();
+					// 			oCbPra.setValue();
+					// 		}
+					// 		this.close();
+					// 	},
+					// 	cancel: function () {
+					// 		oInput.removeAllTokens();
+					// 		this.close();
+					// 	}
+					// });
 				}
 				//Bind the columns for table
 				var oColMod = new sap.ui.model.json.JSONModel();
