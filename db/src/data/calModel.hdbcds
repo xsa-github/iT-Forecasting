@@ -5,35 +5,43 @@ context Calendar {
     define view V_EMPLOYEE as
         select from Header
         {
-            "Header"."EmpID" as "EMPID",
-            "Header"."EmpName" as "EMPNAME",
-            "Header"."EmpResourceGrp" as "EMPRESOURCEGRP",
+            "Header"."EmpID"                as "EMPID",
+            "Header"."EmpName"              as "EMPNAME",
+            "Header"."EmpResourceGrp"       as "EMPRESOURCEGRP",
             "Header"."EmpResourceParentGrp" as "EMPRESOURCEPARENT"
         };
-    
+
     define view V_BOOKING as
-    	select from Item
-    	{
-    		"Item"."BkEmpID" as "EMPID",
-    		"Item"."BkStartDateTime" as "BKSTARTDATETIME",
-    		"Item"."BkEndDateTime" as "BKENDDATETIME",
-    		"Item"."BkType" as "BKTYPE",
-    		"Item"."BkStatus" as "BKSTATUS",
-    		"Item"."BkCustomerNumber" as "BKCUSTOMER",
-    		"Item"."BkCustomerName" as "BKCUSTOMERNAME",
-    		"Item"."BkWBS" as "BKWBS",
-    		"Item"."BkWBSDesc" as "BKWBSDESC"
-    	};
-    
+        select from Item
+        {
+            "Item"."BkEmpID"          as "EMPID",
+            "Item"."BkStartDateTime"  as "BKSTARTDATETIME",
+            "Item"."BkEndDateTime"    as "BKENDDATETIME",
+            "Item"."BkType"           as "BKTYPE",
+            "Item"."BkStatus"         as "BKSTATUS",
+            "Item"."BkCustomerNumber" as "BKCUSTOMER",
+            "Item"."BkCustomerName"   as "BKCUSTOMERNAME",
+            "Item"."BkWBS"            as "BKWBS",
+            "Item"."BkWBSDesc"        as "BKWBSDESC"
+        };
+
     define view V_RESPARENT as
-    	select from Header
-    	distinct {
-    		"Header"."EmpResourceParentGrp" as "EMPRESOURCEPARENT"
-    	};
-    
+        select from Header distinct
+        {
+            "Header"."EmpResourceParentGrp" as "EMPRESOURCEPARENT"
+        }
+    union
+        select from Header
+        {
+            'All' as "EMPRESOURCEPARENT"
+        }
+        order by
+            "EMPRESOURCEPARENT" desc;
+
     define view V_RESGROUP as
-    	select from Header
-    	distinct {
-    		"Header"."EmpResourceGrp" as "EMPRESOURCEGRP"
-    	};
+        select from Header distinct
+        {
+            "Header"."EmpResourceParentGrp" as "EMPRESOURCEPARENT",
+            "Header"."EmpResourceGrp"       as "EMPRESOURCEGRP"
+        };
 }

@@ -34,6 +34,7 @@
 								<fb:FilterItem name="EmpID" label="Employee ID" labelTooltip="Employee ID" mandatory="false">
 									<fb:control>
 										<Input id="inEmpid" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onValueHelpRequest"/>
+											<!--suggestionItems="{ path: '/Employee', sorter: { path: 'EMPID' } }"/>-->
 									</fb:control>
 								</fb:FilterItem>
 							</fb:filterItems>

@@ -5,9 +5,9 @@ sap.ui.define([
 		"sap/ui/unified/library",
 		"sap/m/library",
 		"../model/formatter",
-		"sap/m/SearchField" //Added
-	], //Added
-	function (Controller, MessageBox, JSONModel, unifiedLibrary, mLibrary, formatter, SearchField) {
+		"sap/m/Token"
+	],
+	function (Controller, MessageBox, JSONModel, unifiedLibrary, mLibrary, formatter, Token) {
 		"use strict";
 
 		return Controller.extend("calendar-app.webui5.controller.Calendar", {
@@ -19,16 +19,16 @@ sap.ui.define([
 				this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 
 				// Grab the OData Model
-				var oCalModel = this.getOwnerComponent().getModel();
+				var oCalModel = this.getOwnerComponent().getModel().setSizeLimit(1000);
 
 				// Grab the JSON Model
 				var oFilterModel = this.getOwnerComponent().getModel("filterData");
 
 				// Get query Parameter
-				var resGroup = jQuery.sap.getUriParameters().get("rg");
-				if (!resGroup) {
-					resGroup = "AMS ABAP";
-				}
+				// var resGroup = jQuery.sap.getUriParameters().get("rg");
+				// if (!resGroup) {
+				// 	resGroup = "";
+				// }
 
 				// Instanciate the filter bar
 				this.oFilterBar = this.getView().byId("filterBar");
@@ -38,7 +38,7 @@ sap.ui.define([
 				// Bind the Filters
 				var oCombo1 = this.getView().byId("cb_rg");
 				oCombo1.setModel(oCalModel);
-				oCombo1.setSelectedKey(resGroup);
+				//oCombo1.setSelectedKey(resGroup);
 
 				var oCombo2 = this.getView().byId("cb_rp");
 				oCombo2.setModel(oCalModel);
@@ -95,19 +95,23 @@ sap.ui.define([
 					// when the resource parent changes, reset the resource group & Employee ID
 					oComboGroup.clearSelection();
 					oComboGroup.setValue();
-					oInpEmpid.removeAllTokens();
+					// oInpEmpid.removeAllTokens();
 
 					var oFilterRg = [];
 					var oCbRp = this.getView().byId("cb_rp");
 					var pKey = oCbRp.getSelectedKey();
 					var oCbRg = this.getView().byId("cb_rg");
 					var oBindingRg = oCbRg.getBinding("items");
-					oFilterRg.push(new sap.ui.model.Filter("EMPRESOURCEGRP", "Contains", pKey));
+
+					if (pKey !== "All") {
+						oFilterRg.push(new sap.ui.model.Filter("EMPRESOURCEPARENT", "EQ", pKey));
+					} else {
+						//oFilterRg.push(new sap.ui.model.Filter("EMPRESOURCEPARENT", "ALL"));
+					}
 					oBindingRg.filter(new sap.ui.model.Filter(oFilterRg, true));
 
 				} else if (this.sFilterID === sComboRg) {
 					// when the resource group changes, reset the employee ID
-					//oInpEmpid.setValue();
 					oInpEmpid.removeAllTokens();
 				}
 				// Reset the ID after each invocation
@@ -115,46 +119,49 @@ sap.ui.define([
 			},
 
 			onValueHelpRequest: function () {
-				// var oInput = this.getView().byId("inEmpid");
-				// var oCbGrp = this.getView().byId("cb_rg");
-				// var oCbPra = this.getView().byId("cb_rp");
 
-				//Added
-				this._oBasicSearchField = new SearchField({
-					showSearchButton: false
-				});
+				var oInput = this.getView().byId("inEmpid");
+				var oCbGrp = this.getView().byId("cb_rg");
+				var oCbPra = this.getView().byId("cb_rp");
+
+				// 	//Added
+				// 	// this._oBasicSearchField = new SearchField({
+				// 	// 	showSearchButton: false
+				// 	// });
 
 				if (!this._oValueHelpDialog) {
 
 					// Calling Fragment
-					this._oValueHelpDialog = sap.ui.xmlfragment("sap.ui.comp.sample.valuehelpdialog.singleSelect.fragment.Filterbar", this);
-					this.getView().addDependent(this._oValueHelpDialog);
+					// this._oValueHelpDialog = sap.ui.xmlfragment("sap.ui.comp.sample.valuehelpdialog.singleSelect.fragment.Filterbar", this);
+					// this.getView().addDependent(this._oValueHelpDialog);
 
 					//Define filter bar
-					var oFilterBar = this._oValueHelpDialog.getFilterBar();
-					oFilterBar.setFilterBarExpanded(false);
-					oFilterBar.setBasicSearch(this._oBasicSearchField);
+					// var oFilterBar = this._oValueHelpDialog.getFilterBar();
+					// oFilterBar.setFilterBarExpanded(false);
+					// oFilterBar.setBasicSearch(this._oBasicSearchField);
 
-					// this._oValueHelpDialog = new sap.ui.comp.valuehelpdialog.ValueHelpDialog("idValueHelp", {
-					// 	key: "EMPID",
-					// 	descriptionKey: "EMPNAME",
-					// 	ok: function (oEvent) {
-					// 		var aTokens = oEvent.getParameter("tokens");
-					// 		oInput.setTokens(aTokens);
-					// 		//Clear Pratcis and Teams values
-					// 		if (aTokens.length !== 0) {
-					// 			oCbGrp.clearSelection();
-					// 			oCbGrp.setValue();
-					// 			oCbPra.clearSelection();
-					// 			oCbPra.setValue();
-					// 		}
-					// 		this.close();
-					// 	},
-					// 	cancel: function () {
-					// 		oInput.removeAllTokens();
-					// 		this.close();
-					// 	}
-					// });
+					this._oValueHelpDialog = new sap.ui.comp.valuehelpdialog.ValueHelpDialog("idValueHelp", {
+						key: "EMPID",
+						descriptionKey: "EMPNAME",
+						//supportMultiselect: "false",
+						ok: function (oEvent) {
+							var aTokens = oEvent.getParameter("tokens");
+							oInput.setSelectedKey(aTokens[0].getKey());
+							// oInput.setTokens(aTokens);
+							//Clear Pratcis and Teams values
+							if (aTokens.length !== 0) {
+								oCbGrp.clearSelection();
+								oCbGrp.setValue();
+								oCbPra.clearSelection();
+								oCbPra.setValue();
+							}
+							this.close();
+						},
+						cancel: function () {
+							oInput.removeAllTokens();
+							this.close();
+						}
+					});
 				}
 				//Bind the columns for table
 				var oColMod = new sap.ui.model.json.JSONModel();
@@ -195,18 +202,22 @@ sap.ui.define([
 				var sParentKey = oComboRp.getSelectedKey();
 				var sGroupKey = oComboRg.getSelectedKey();
 				//var sEmpidVal = oInpEmpid.getValue();
-				var oTokens = oInpEmpid.getTokens();
+				//var oTokens = oInpEmpid.getTokens();
+
+				// var oToken = new Token();
+				// oToken.setKey(oInpEmpid.getSelectedKey());
+				// oToken.setText(oInpEmpid.getValue());
+
+				// this._oValueHelpDialog.setTokens([oToken]);
+
 				var oFilter = [];
 
-				if (oTokens.length !== 0) {
-					// var fArr = [];
-					// for (var i = 0; i < oTokens.length; i++) {
-					// 	fArr[i] = new sap.ui.model.Filter("EMPID", "EQ", oTokens[i].mProperties.key);
-					// }
-					oFilter.push(new sap.ui.model.Filter("EMPID", "EQ", oTokens[0].mProperties.key));
-				} else if (sGroupKey !== "") {
+				// if (oToken.mProperties.key !== "") {
+				// 	oFilter.push(new sap.ui.model.Filter("EMPID", "EQ", oToken.mProperties.key));
+				// } else 
+				if (sGroupKey !== "") {
 					oFilter.push(new sap.ui.model.Filter("EMPRESOURCEGRP", "EQ", sGroupKey));
-				} else if (sParentKey !== "") {
+				} else if (sParentKey !== "All") {
 					oFilter.push(new sap.ui.model.Filter("EMPRESOURCEPARENT", "EQ", sParentKey));
 				} else {
 					oFilter.push(new sap.ui.model.Filter("EMPRESOURCEPARENT", "ALL"));
