@@ -5,24 +5,24 @@
 		xmlns:core="sap.ui.core">
 	<ValueHelpDialog
 			title="Employee"
-			ok=".onValueHelpWithSuggestionsOkPress"
-			cancel=".onValueHelpWithSuggestionsCancelPress"
-			afterClose=".onValueHelpWithSuggestionsAfterClose"
-			supportRanges="true"
-			key="EMPID"
-			descriptionKey="EMPNAME"
+			ok="onValueHelpOkPress"
+			cancel="onValueHelpCancelPress"
+			afterClose="onValueHelpAfterClose"
+			supportMultiselect="false"
+			key="EMPNAME"
+			descriptionKey="EMPID"
 	>
 		<filterBar>
-			<fb:FilterBar advancedMode="true" search=".onFilterBarWithSuggestionsSearch">
+			<fb:FilterBar advancedMode="true" search="onFilterBarSearch">
 				<fb:filterGroupItems>
 					<fb:FilterGroupItem
 							groupName="__$INTERNAL$"
-							name="FilterBar.fragment"
+							name="EMPID"
 							label="Employee ID"
 							visibleInFilterBar="true"
 					>
 						<fb:control>
-							<m:Input id="inputEmployeeId"
+							<m:Input id="inputEmpId"
 									 name="EMPID"
 									 showSuggestion="true"
 									 showValueHelp="false"
@@ -42,7 +42,7 @@
 							visibleInFilterBar="true"
 					>
 						<fb:control>
-							<m:Input id="inputEmployeeName"
+							<m:Input id="inputEmpName"
 									 name="EMPNAME"
 									 showSuggestion="true"
 									 showValueHelp="false"

@@ -34,9 +34,7 @@ context Calendar {
         select from Header
         {
             'All' as "EMPRESOURCEPARENT"
-        }
-        order by
-            "EMPRESOURCEPARENT" desc;
+        };
 
     define view V_RESGROUP as
         select from Header distinct

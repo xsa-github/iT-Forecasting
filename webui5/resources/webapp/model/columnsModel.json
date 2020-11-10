@@ -1,0 +1,13 @@
+{
+	"cols": [
+		{
+			"label": "Employee ID",
+			"template": "EMPID",
+			"width": "5rem"
+		},
+		{
+			"label": "Employee Name",
+			"template": "EMPNAME"
+		}
+	]
+}

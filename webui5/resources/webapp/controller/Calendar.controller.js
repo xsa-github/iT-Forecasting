@@ -5,9 +5,12 @@ sap.ui.define([
 		"sap/ui/unified/library",
 		"sap/m/library",
 		"../model/formatter",
-		"sap/m/Token"
+		"sap/m/Token",
+		"sap/m/SearchField",
+		"sap/ui/model/Filter",
+		"sap/ui/model/FilterOperator"
 	],
-	function (Controller, MessageBox, JSONModel, unifiedLibrary, mLibrary, formatter, Token) {
+	function (Controller, MessageBox, JSONModel, unifiedLibrary, mLibrary, formatter, Token, SearchField, Filter, FilterOperator) {
 		"use strict";
 
 		return Controller.extend("calendar-app.webui5.controller.Calendar", {
@@ -19,16 +22,10 @@ sap.ui.define([
 				this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 
 				// Grab the OData Model
-				var oCalModel = this.getOwnerComponent().getModel().setSizeLimit(1000);
+				var oCalModel = this.getOwnerComponent().getModel().setSizeLimit(700);
 
 				// Grab the JSON Model
 				var oFilterModel = this.getOwnerComponent().getModel("filterData");
-
-				// Get query Parameter
-				// var resGroup = jQuery.sap.getUriParameters().get("rg");
-				// if (!resGroup) {
-				// 	resGroup = "";
-				// }
 
 				// Instanciate the filter bar
 				this.oFilterBar = this.getView().byId("filterBar");
@@ -38,7 +35,6 @@ sap.ui.define([
 				// Bind the Filters
 				var oCombo1 = this.getView().byId("cb_rg");
 				oCombo1.setModel(oCalModel);
-				//oCombo1.setSelectedKey(resGroup);
 
 				var oCombo2 = this.getView().byId("cb_rp");
 				oCombo2.setModel(oCalModel);
@@ -95,7 +91,6 @@ sap.ui.define([
 					// when the resource parent changes, reset the resource group & Employee ID
 					oComboGroup.clearSelection();
 					oComboGroup.setValue();
-					// oInpEmpid.removeAllTokens();
 
 					var oFilterRg = [];
 					var oCbRp = this.getView().byId("cb_rp");
@@ -103,16 +98,16 @@ sap.ui.define([
 					var oCbRg = this.getView().byId("cb_rg");
 					var oBindingRg = oCbRg.getBinding("items");
 
-					if (pKey !== "All") {
+					if (pKey !== "All" && pKey !== "") {
 						oFilterRg.push(new sap.ui.model.Filter("EMPRESOURCEPARENT", "EQ", pKey));
 					} else {
-						//oFilterRg.push(new sap.ui.model.Filter("EMPRESOURCEPARENT", "ALL"));
+						oFilterRg.push(new sap.ui.model.Filter("EMPRESOURCEPARENT", "ALL"));
 					}
 					oBindingRg.filter(new sap.ui.model.Filter(oFilterRg, true));
+					oInpEmpid.setValue("");
 
 				} else if (this.sFilterID === sComboRg) {
-					// when the resource group changes, reset the employee ID
-					oInpEmpid.removeAllTokens();
+					oInpEmpid.setValue("");
 				}
 				// Reset the ID after each invocation
 				this.sFilterID = "";
@@ -120,50 +115,17 @@ sap.ui.define([
 
 			onValueHelpRequest: function () {
 
-				var oInput = this.getView().byId("inEmpid");
-				var oCbGrp = this.getView().byId("cb_rg");
-				var oCbPra = this.getView().byId("cb_rp");
+				this._oBasicSearchFieldWithSuggestions = new SearchField({
+					showSearchButton: true //false
+				});
 
-				// 	//Added
-				// 	// this._oBasicSearchField = new SearchField({
-				// 	// 	showSearchButton: false
-				// 	// });
+				this._oValueHelpDialogWithSuggestions = sap.ui.xmlfragment("calendar-app.webui5.fragment.Filterbar", this);
+				this.getView().addDependent(this._oValueHelpDialogWithSuggestions);
 
-				if (!this._oValueHelpDialog) {
+				var oSearchBar = this._oValueHelpDialogWithSuggestions.getFilterBar();
+				oSearchBar.setFilterBarExpanded(false);
+				oSearchBar.setBasicSearch(this._oBasicSearchFieldWithSuggestions);
 
-					// Calling Fragment
-					// this._oValueHelpDialog = sap.ui.xmlfragment("sap.ui.comp.sample.valuehelpdialog.singleSelect.fragment.Filterbar", this);
-					// this.getView().addDependent(this._oValueHelpDialog);
-
-					//Define filter bar
-					// var oFilterBar = this._oValueHelpDialog.getFilterBar();
-					// oFilterBar.setFilterBarExpanded(false);
-					// oFilterBar.setBasicSearch(this._oBasicSearchField);
-
-					this._oValueHelpDialog = new sap.ui.comp.valuehelpdialog.ValueHelpDialog("idValueHelp", {
-						key: "EMPID",
-						descriptionKey: "EMPNAME",
-						//supportMultiselect: "false",
-						ok: function (oEvent) {
-							var aTokens = oEvent.getParameter("tokens");
-							oInput.setSelectedKey(aTokens[0].getKey());
-							// oInput.setTokens(aTokens);
-							//Clear Pratcis and Teams values
-							if (aTokens.length !== 0) {
-								oCbGrp.clearSelection();
-								oCbGrp.setValue();
-								oCbPra.clearSelection();
-								oCbPra.setValue();
-							}
-							this.close();
-						},
-						cancel: function () {
-							oInput.removeAllTokens();
-							this.close();
-						}
-					});
-				}
-				//Bind the columns for table
 				var oColMod = new sap.ui.model.json.JSONModel();
 				oColMod.setData({
 					cols: [{
@@ -174,7 +136,7 @@ sap.ui.define([
 						template: "EMPNAME"
 					}]
 				});
-				var oTable = this._oValueHelpDialog.getTable();
+				var oTable = this._oValueHelpDialogWithSuggestions.getTable();
 				oTable.setModel(oColMod, "columns");
 
 				//Create row model and bind to row aggregation table
@@ -182,16 +144,94 @@ sap.ui.define([
 				oTable.setModel(oRowModel);
 				oTable.bindRows("/Employee");
 
-				this._oValueHelpDialog.open();
+				var oToken = new Token();
+				var oInput = this.getView().byId("inEmpid");
+				oToken.setKey(oInput.getSelectedKey());
+				oToken.setText(oInput.getValue());
+				this._oValueHelpDialogWithSuggestions.setTokens([oToken]);
+
+				this._oValueHelpDialogWithSuggestions.open();
+			},
+
+			onValueHelpOkPress: function (oEvent) {
+				var aTokens = oEvent.getParameter("tokens");
+				var oInput = this.getView().byId("inEmpid");
+				oInput.setValue(aTokens[aTokens.length-1].mProperties.key);
+				this._oValueHelpDialogWithSuggestions.close();
+				var oCbGroup = this.getView().byId("cb_rg");
+				oCbGroup.clearSelection();
+				oCbGroup.setValue();
+				var oCbPrant = this.getView().byId("cb_rp");
+				oCbPrant.clearSelection();
+				oCbPrant.setValue();
+			},
+
+			onValueHelpCancelPress: function () {
+				this._oValueHelpDialogWithSuggestions.close();
+			},
+
+			onValueHelpAfterClose: function () {
+				this._oValueHelpDialogWithSuggestions.destroy();
+			},
+
+			onFilterBarSearch: function (oEvent) {
+				var sSearchQuery = this._oBasicSearchFieldWithSuggestions.getValue(),
+					aSelectionSet = oEvent.getParameter("selectionSet");
+				var aFilters = aSelectionSet.reduce(function (aResult, oControl) {
+					if (oControl.getValue()) {
+						aResult.push(new Filter({
+							path: oControl.getName(),
+							operator: FilterOperator.Contains,
+							value1: oControl.getValue()
+						}));
+					}
+
+					return aResult;
+				}, []);
+
+				aFilters.push(new Filter({
+					filters: [
+						new Filter({
+							path: "EMPID",
+							operator: FilterOperator.Contains,
+							value1: sSearchQuery
+						}),
+						new Filter({
+							path: "EMPNAME",
+							operator: FilterOperator.Contains,
+							value1: sSearchQuery
+						})
+					],
+					and: false
+				}));
+
+				this._filterTableWithSuggestions(new Filter({
+					filters: aFilters,
+					and: true
+				}));
+			},
+
+			_filterTableWithSuggestions: function (oFilter) {
+				var oValueHelpDialog = this._oValueHelpDialogWithSuggestions;
+
+				oValueHelpDialog.getTableAsync().then(function (oTable) {
+					if (oTable.bindRows) {
+						oTable.getBinding("rows").filter(oFilter);
+					}
+
+					if (oTable.bindItems) {
+						oTable.getBinding("items").filter(oFilter);
+					}
+
+					oValueHelpDialog.update();
+				});
 			},
 
 			onSearch: function () {
 				this.filterCalendar();
 			},
-
-			/*
-			Apply filters to the Calendar when the selection changes.
-			 */
+			
+			//Apply filters to the Calendar when the selection changes
 			filterCalendar: function () {
 				var oComboRp = this.getView().byId("cb_rp");
 				var oComboRg = this.getView().byId("cb_rg");
@@ -201,31 +241,21 @@ sap.ui.define([
 
 				var sParentKey = oComboRp.getSelectedKey();
 				var sGroupKey = oComboRg.getSelectedKey();
-				//var sEmpidVal = oInpEmpid.getValue();
-				//var oTokens = oInpEmpid.getTokens();
-
-				// var oToken = new Token();
-				// oToken.setKey(oInpEmpid.getSelectedKey());
-				// oToken.setText(oInpEmpid.getValue());
-
-				// this._oValueHelpDialog.setTokens([oToken]);
 
 				var oFilter = [];
 
-				// if (oToken.mProperties.key !== "") {
-				// 	oFilter.push(new sap.ui.model.Filter("EMPID", "EQ", oToken.mProperties.key));
-				// } else 
-				if (sGroupKey !== "") {
+				if (oInpEmpid.mProperties.value !== "") {
+					oFilter.push(new sap.ui.model.Filter("EMPNAME", "EQ", oInpEmpid.mProperties.value));
+				} else if (sGroupKey !== "") {
 					oFilter.push(new sap.ui.model.Filter("EMPRESOURCEGRP", "EQ", sGroupKey));
-				} else if (sParentKey !== "All") {
+				} else if (sParentKey !== "All" && sParentKey.length !== 1) {
 					oFilter.push(new sap.ui.model.Filter("EMPRESOURCEPARENT", "EQ", sParentKey));
+				} else if (sParentKey.length === 1) {
+					//Dont display anything
+					oFilter.push(new sap.ui.model.Filter("EMPRESOURCEPARENT", "EQ", ""));
 				} else {
 					oFilter.push(new sap.ui.model.Filter("EMPRESOURCEPARENT", "ALL"));
 				}
-
-				// if (sEmpidVal !== "") {
-				// 	oFilter.push(new sap.ui.model.Filter("EMPID", sap.ui.model.FilterOperator.Contains, sEmpidVal));
-				// }
 
 				if (oFilter.length > 0) {
 					oBinding.filter(new sap.ui.model.Filter(oFilter, true));
