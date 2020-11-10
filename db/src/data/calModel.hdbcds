@@ -29,11 +29,6 @@ context Calendar {
         select from Header distinct
         {
             "Header"."EmpResourceParentGrp" as "EMPRESOURCEPARENT"
-        }
-    union
-        select from Header
-        {
-            'All' as "EMPRESOURCEPARENT"
         };
 
     define view V_RESGROUP as

@@ -33,7 +33,10 @@
 								</fb:FilterItem>
 								<fb:FilterItem name="EmpID" label="Employee Name" labelTooltip="Employee Name" mandatory="false">
 									<fb:control>
-										<Input id="inEmpid" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onValueHelpRequest"/>
+										<Input id="inEmpid" name="EMPNAME" showSuggestion="true" showValueHelp="false" change="onChange"
+											suggestionItems="{ path: '/Employee', sorter: { path: 'EMPNAME' } }">
+											<core:Item key="{EMPNAME}" text="{EMPNAME}"/>
+										</Input>
 									</fb:control>
 								</fb:FilterItem>
 							</fb:filterItems>
