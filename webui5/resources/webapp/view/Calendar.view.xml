@@ -46,8 +46,12 @@
 							legend="PlanningCalendarLegend" showEmptyIntervalHeaders="false">
 							<views>
 								<PlanningCalendarView key="M" intervalType="Month" description="1 Quarter" intervalsS="3" intervalsM="3" intervalsL="3"
-									showSubIntervals="true"></PlanningCalendarView>
+									showSubIntervals="true"/>
 							</views>
+							<toolbarContent>
+								<ToolbarSpacer></ToolbarSpacer>
+								<Button id="exportBtn" text="Download" icon="sap-icon://download" press="onDataExport" tooltip="Download"/>
+							</toolbarContent>
 							<rows>
 								<PlanningCalendarRow id="myCalRow" title="{EMPNAME}" text="{EMPID}" appointments="{path: 'Booking', templateShareable: 'true'}"
 									tooltip="{EMPRESOURCEGROUP}">
@@ -55,7 +59,8 @@
 										<unified:CalendarAppointment startDate="{path: 'BKSTARTDATETIME', formatter: '.formatter.startTimeCorrection'}"
 											endDate="{path: 'BKENDDATETIME', formatter: '.formatter.endTimeCorrection'}"
 											title="{path: 'BKWBSDESC', formatter: '.formatter.nullStringCorrection'}"
-											type="{parts:[{path : 'BKTYPE'}, {path : 'BKSTATUS'}], formatter: '.formatter.bookingTypeFix'}" tooltip="{BKWBS} {BKWBSDESC}"></unified:CalendarAppointment>
+											type="{parts:[{path : 'BKTYPE'}, {path : 'BKSTATUS'}], formatter: '.formatter.bookingTypeFix'}" tooltip="{BKWBS} {BKWBSDESC}"
+											key="{EMPID}"/>
 									</appointments>
 								</PlanningCalendarRow>
 							</rows>

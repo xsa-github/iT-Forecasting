@@ -4,9 +4,11 @@ sap.ui.define([
 		"sap/ui/model/json/JSONModel",
 		"sap/ui/unified/library",
 		"sap/m/library",
-		"../model/formatter"
+		"../model/formatter",
+		"sap/ui/export/Spreadsheet",
+		"sap/m/MessageToast"
 	],
-	function (Controller, MessageBox, JSONModel, unifiedLibrary, mLibrary, formatter) {
+	function (Controller, MessageBox, JSONModel, unifiedLibrary, mLibrary, formatter, Spreadsheet, MessageToast) {
 		"use strict";
 
 		return Controller.extend("calendar-app.webui5.controller.Calendar", {
@@ -172,6 +174,77 @@ sap.ui.define([
 
 				if (oFilter.length > 0) {
 					oBinding.filter(new sap.ui.model.Filter(oFilter, true));
+				}
+			},
+
+			createColumnConfig: function () {
+				return [{
+						label: "Employee ID",
+						property: "EMPID"
+					}, {
+						label: "Employee Name",
+						property: "EMPNAME"
+					},
+					{
+						label: "Start Date Time",
+						property: "Booking/BKSTARTDATETIME"
+					}, {
+						label: "End Date Time",
+						property: "Booking/BKENDDATETIME"
+					}, {
+						label: "Type",
+						property: "Booking/BKTYPE"
+					}, {
+						label: "Status",
+						property: "Booking/BKSTATUS"
+					}, {
+						label: "Customer Number",
+						property: "Booking/BKCUSTOMER"
+					}, {
+						label: "Customer Name",
+						property: "Booking/BKCUSTOMERNAME"
+					}, {
+						label: "WBS",
+						property: "Booking/BKWBS"
+					}, {
+						label: "WBS Description",
+						property: "Booking/BKWBSDESCT"
+					}
+				];
+			},
+
+			onDataExport: function (oEvent) {
+
+				var oModel = this.getOwnerComponent().getModel();
+				var oBinding = oModel.aBindings;
+
+				var aCols = this.createColumnConfig();
+				var oCalendar = this.getView().byId("myCal");
+				var oRows = oCalendar.getBinding("rows");
+				var rlen = oRows.getLength();
+				if (rlen !== 0) {
+					var downlaodUrl = oRows.getDownloadUrl();
+					var bookingUrl = downlaodUrl.concat("&$expand=Booking");
+					var oSettings = {
+						workbook: {
+							columns: aCols
+						},
+						context: {
+							sheetName: 'Sheet1'
+						},
+						dataSource: {
+							type: "OData",
+							useBatch: true,
+							serviceUrl: oRows.getModel().sServiceUrl,
+							dataUrl: bookingUrl,
+							count: rlen
+						},
+						fileName: oRows.getFilterInfo().right.value
+					};
+					var oSheet = new Spreadsheet(oSettings);
+					oSheet.build();
+				} else {
+					MessageToast.show("No table entry found for download");
 				}
 			}
 		});
