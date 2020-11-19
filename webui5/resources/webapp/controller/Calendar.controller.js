@@ -214,10 +214,6 @@ sap.ui.define([
 			},
 
 			onDataExport: function (oEvent) {
-
-				var oModel = this.getOwnerComponent().getModel();
-				var oBinding = oModel.aBindings;
-
 				var aCols = this.createColumnConfig();
 				var oCalendar = this.getView().byId("myCal");
 				var oRows = oCalendar.getBinding("rows");
