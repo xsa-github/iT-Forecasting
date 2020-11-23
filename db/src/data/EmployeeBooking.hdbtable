@@ -7,8 +7,8 @@ column table Booking (
 	"BKCUSTOMER" NVARCHAR(10) comment 'Customer ID',
 	"BKCUSTOMERNAME" NVARCHAR(40) comment 'Customer Name',
 	"BKWBS" NVARCHAR(20) comment 'WBS Code',
-	"BKWBSDESC" NVARCHAR(40) comment 'WBS Desc.',
-	primary key ("EMPID","BKSTARTDATETIME","BKENDDATETIME"))
+	"BKWBSDESC" NVARCHAR(40) not null comment 'WBS Desc.',
+	primary key ("EMPID","BKSTARTDATETIME","BKENDDATETIME")
 	comment 'Calendar Employee Booking'
 	with associations( join "EMPLOYEE" on "EMPLOYEE"."EMPID" = "EMPID" )
 	unload priority 2 auto merge

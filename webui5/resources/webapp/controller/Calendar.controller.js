@@ -74,9 +74,18 @@ sap.ui.define([
 				if (oAppointment) {
 					if (oAppointment.getSelected()) {
 						var oContext = oAppointment.getBindingContext();
+						var sDate = oContext.getProperty("BKSTARTDATETIME");
+						var eDate = oContext.getProperty("BKENDDATETIME");
+						var sHrs = sDate.getUTCHours();
+						var sMin = sDate.getUTCMinutes();
+						var eHrs = eDate.getUTCHours();
+						var eMin = eDate.getUTCMinutes();
+						var aHrs = eHrs - sHrs;
+						var aMin = eMin - sMin;
 						if (oContext) {
 							MessageBox.information("WBS Code: " + oContext.getProperty("BKWBS") + "\n" + "WBS Desc: " + oContext.getProperty("BKWBSDESC") +
-								"\n" + "Customer: " + oContext.getProperty("BKCUSTOMERNAME") + "\n" + "Status: " + oContext.getProperty("BKSTATUS"));
+								"\n" + "Customer: " + oContext.getProperty("BKCUSTOMERNAME") + "\n" + "Status: " + oContext.getProperty("BKSTATUS") + 
+								"\n" + "Duration: " + aHrs + " Hours " + aMin + " Minutes");
 						}
 					}
 				}

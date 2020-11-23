@@ -1,6 +1,6 @@
 service {
 	"Calendar.V_EMPLOYEE" as "Employee" key("EMPID") navigates ("Bookings" as "Booking");
-	"Calendar.V_BOOKING" as "Booking" key("EMPID","BKSTARTDATETIME","BKENDDATETIME");
+	"Calendar.V_BOOKING" as "Booking" key("EMPID","BKSTARTDATETIME","BKENDDATETIME", "BKWBSDESC");
 	"Calendar.V_RESPARENT" as "ResParent" key("EMPRESOURCEPARENT");
 	"Calendar.V_RESGROUP" as "ResGroup" key("EMPRESOURCEPARENT", "EMPRESOURCEGRP");
 
